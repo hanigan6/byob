@@ -1,0 +1,16 @@
+Install git on computer. Google search this
+
+then with bash do:
+
+1) change directory where you want your files stored
+2) git clone https://github.com/hanigan6/byob 
+	This will create a reposotory folder named byob
+3) cd into byob
+	From here you can push,pull,add,and commit changes - 4 basic commands
+4) Before you make changes do a git pull to see if everything is up to date
+5) Once updated you can make changes to files / make new files in eclipse
+6) once done with changes do git add --all
+7) git commit -m 'Message Text - highe light chaanges '
+8) git push
+
+I am not sure if anything locks out so we may have to be careful but this will store all versions so wer can go back and get old versions if something breaks.

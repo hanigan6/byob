@@ -35,8 +35,8 @@ public class Beer extends Activity implements OnClickListener {
 		btnAddBeer.setOnClickListener(this);
 		
 		//spinner1 = (Spinner) findViewById(R.id.sort_spinner);
-		View spnSort = (Spinner) findViewById(R.id.sort_spinner);
-		spnSort.setOnClickListener(this);
+		//View spnSort = (Spinner) findViewById(R.id.sort_spinner);
+		//spnSort.setOnClickListener(this);
 		//spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 	}
 	

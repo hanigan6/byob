@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.util.Log;
 
 public class Login extends Activity implements OnClickListener {
 	private EditText userNameEditableField;
@@ -24,6 +25,10 @@ public class Login extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		for (int x = 0; x < 10000; x++) {
+			
+		}
+	
 		userNameEditableField = (EditText) findViewById(R.id.username_text);
 		passwordEditableField = (EditText) findViewById(R.id.password_text);
 		View btnLogin = (Button) findViewById(R.id.login_button);
@@ -52,5 +57,29 @@ public class Login extends Activity implements OnClickListener {
 			startActivity(new Intent(this, MainActivity.class));
 			break;
 		}
+	}
+	
+	protected void onResume() {
+		super.onResume();
+		
+		Log.i("x", "resume");
+	}
+	
+	protected void onPause() {
+		super.onPause();
+		
+		Log.i("x", "pause");
+	}
+	
+	protected void onStart() {
+		super.onStart();
+		
+		Log.i("x", "start");
+	}
+	
+	protected void onStop() {
+		super.onStop();
+		
+		Log.i("x", "stop");
 	}
 }

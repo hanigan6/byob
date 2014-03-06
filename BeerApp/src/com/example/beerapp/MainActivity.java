@@ -37,13 +37,16 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.Beer_button:
-			//startActivity(new Intent(com.example.beerapp.Beer));
+			startActivity(new Intent(
+					"com.example.beerapp.Beer"));
 			break;
 		case R.id.Wine_button:
-			//startActivity(new Intent(this, Beer.class));
+			startActivity(new Intent(
+					"com.example.beerapp.Beer"));
 			break;
 		case R.id.Liquor_button:
-			//startActivity(new Intent(this, Beer.class));
+			startActivity(new Intent(
+					"com.example.beerapp.Beer"));
 			break;		
 		}
 	}

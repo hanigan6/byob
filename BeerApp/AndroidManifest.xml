@@ -18,7 +18,7 @@
             android:name="com.example.beerapp.SplashScreen"
             android:label="@string/app_name"
             android:launchMode="standard"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/FullscreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -39,7 +39,7 @@
             android:name="com.example.beerapp.Beer"
             android:label="@string/app_name"
             android:launchMode="standard"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/FullscreenTheme" >
             <intent-filter>
             	<action android:name="com.example.beerapp.Beer" />
             	<category android:name="android.intent.category.DEFAULT" />
@@ -50,7 +50,7 @@
             android:name="com.example.beerapp.MainActivity"
             android:label="@string/app_name"
             android:launchMode="standard"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/FullscreenTheme" >
             <intent-filter>
             	<action android:name="com.example.beerapp.MainActivity" />
             	<category android:name="android.intent.category.DEFAULT" />
@@ -61,7 +61,7 @@
             android:name="com.example.beerapp.Login"
             android:label="@string/app_name"
             android:launchMode="standard"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/FullscreenTheme" >
             <intent-filter>
             	<action android:name="com.example.beerapp.Login" />
             	<category android:name="android.intent.category.DEFAULT" />

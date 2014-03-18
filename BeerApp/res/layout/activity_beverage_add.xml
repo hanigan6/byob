@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    	<TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginBottom="15dip"
+	            android:text="@string/add_beer"
+	            android:textSize="20.5sp" />
+	    	
+	 		<TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/name"
+	            android:textSize="15.5sp" />
+	        <EditText
+	            android:id="@+id/name_text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:inputType="text"
+	            android:singleLine="true" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/maker"
+	            android:textSize="15.5sp" />
+	        <EditText
+	            android:id="@+id/maker_text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:inputType="text"
+	            android:singleLine="true" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/maker_location"
+	            android:textSize="15.5sp" />
+	        <EditText
+	            android:id="@+id/maker_location_text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:inputType="text"
+	            android:singleLine="true" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/abv"
+	            android:textSize="15.5sp" />
+	        <EditText
+	            android:id="@+id/ABV_text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:inputType="text"
+	            android:singleLine="true" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/type"
+	            android:textSize="15.5sp" />
+	        <EditText
+	            android:id="@+id/type_text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:inputType="text"
+	            android:singleLine="true" />
+	        
+	        <Button
+	            android:id="@+id/add_beer_button"
+	     		android:layout_marginTop="10dip"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/add_beer" />
+
+</LinearLayout>

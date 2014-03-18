@@ -32,5 +32,11 @@
         <string name="exit">exit</string>
         <string name="new_user">new_user</string>
         <string name="content">content</string>
+        <string name="beer_list">beer_list</string>
+        <string name="name">name</string>
+        <string name="maker">maker</string>
+        <string name="abv">ABV</string>
+        <string name="maker_location">maker_location</string>
+        <string name="type">type</string>
 
 </resources>

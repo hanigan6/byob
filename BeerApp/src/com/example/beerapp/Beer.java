@@ -13,7 +13,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Spinner;
+
+import android.widget.AdapterView;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class Beer extends Activity implements OnClickListener {
 	private EditText search;
@@ -34,10 +41,48 @@ public class Beer extends Activity implements OnClickListener {
 		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
 		btnAddBeer.setOnClickListener(this);
 		
+		
+		
 		//spinner1 = (Spinner) findViewById(R.id.sort_spinner);
 		//View spnSort = (Spinner) findViewById(R.id.sort_spinner);
 		//spnSort.setOnClickListener(this);
 		//spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+		
+		ListView list = (ListView) findViewById(R.id.beer_list);
+		          
+		        // defining Adapter for List content
+		       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		            android.R.layout.simple_list_item_1);
+		       
+		       adapter.add("One");
+		       adapter.add("Two");
+		       
+		       list.setAdapter(adapter);
+		       
+		       list.setOnItemClickListener(new 
+		    		                AdapterView.OnItemClickListener() {
+		    		                @Override
+		    		                public void onItemClick(AdapterView<?> arg0, 
+		    		                        View arg1, 
+		    		                        int arg2,
+		    		                        long arg3) {
+		    		                    TextView sel = (TextView) arg1;
+		    		                    String selectedItem = sel.getText().toString();
+		    		                    new AlertDialog.Builder(Beer.this)
+		    		                            .setTitle("Selection Information")
+		    		                            .setMessage("You have selected " 
+		    		                                    + selectedItem)
+		    		                            .setNeutralButton("OK",
+		    		                                new DialogInterface.OnClickListener() {
+		    		                                    public void onClick(
+		    		                                            DialogInterface dialog,
+		    		                                            int whichButton) {
+		    		     
+		    		                                    }
+		    		                                }).show();
+		    		                }
+		    		     
+		    		            });
 	}
 	
 	private void doMySearch(String query) {
@@ -47,8 +92,8 @@ public class Beer extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		/*switch (v.getId()) {
-		case R.id.Beer_button:
+		switch (v.getId()) {
+		case R.id.add_beer_button:
 			//checkLogin();
 			break;
 		case R.id.Wine_button:
@@ -58,7 +103,7 @@ public class Beer extends Activity implements OnClickListener {
 			//startActivity(new Intent(this, Account.class));
 			break;
 					
-		}*/
+		}
 	}
 
 }

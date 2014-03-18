@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="20dip" >
-    
-	<LinearLayout 
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:gravity="fill_vertical"
 	    android:orientation="vertical" >
 	    
 	    	<TextView
@@ -16,38 +11,50 @@
 	            android:layout_gravity="center"
 	            android:layout_marginBottom="15dip"
 	            android:text="@string/beer_page"
-	            android:textSize="20.5sp" />
+	            android:textSize="20.5sp" 
+	            />
 	    	
 	 		<TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="10dip"
+	            android:layout_marginTop="35dip"
 	            android:layout_gravity="left"
 	            android:text="@string/search_bar"
-	            android:textSize="15.5sp" />
+	            android:textSize="15.5sp" 
+	            />
 	
 	        <EditText
 	            android:id="@+id/search_text"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="10dip"
+	            android:layout_marginTop="60dip"
 	            android:inputType="text"
 	            android:singleLine="true" />
-	        
+
+	        <Spinner
+	            android:id="@+id/sort_spinner"
+	            android:layout_width="154dp"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="110dip"
+	            android:layout_marginLeft="145dip"
+	            android:entries="@array/sort_options"
+	            android:prompt="@string/sort_prompt" />
+
 	        <Button
 	            android:id="@+id/add_beer_button"
-	     		android:layout_marginTop="10dip"
-	            android:layout_width="wrap_content"
+	            android:layout_width="100dip"
 	            android:layout_height="wrap_content"
+	            android:layout_marginTop="110dip"
 	            android:text="@string/add_beer" />
-	
-	        <Spinner
-		        android:id="@+id/sort_spinner"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dip"
-		        android:entries="@array/sort_options"
-		        android:prompt="@string/sort_prompt" />
+
+			<ListView
+			    android:id="@+id/beer_list"
+			    android:layout_marginTop="200dip"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_alignParentTop="true" >
+			</ListView>
 	        
-	</LinearLayout>
-</ScrollView>
+	</RelativeLayout>
+

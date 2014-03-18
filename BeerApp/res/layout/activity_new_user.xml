@@ -71,5 +71,11 @@
 	            android:layout_marginTop="10dip"
 	            android:inputType="textPassword"
 	            android:singleLine="true" />
+	        <Button
+            android:id="@+id/new_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/new_user" />
     
 </LinearLayout>

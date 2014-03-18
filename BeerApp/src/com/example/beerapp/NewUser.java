@@ -2,10 +2,6 @@ package com.example.beerapp;
 
 
 
-import java.util.List;
-
-
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,74 +13,81 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.util.Log;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class Login extends Activity implements OnClickListener {
+public class NewUser extends Activity implements OnClickListener {
 	private Database dh;
 	private EditText userNameEditableField;
+	private EditText emailEditableField;
 	private EditText passwordEditableField;
+	private EditText confirmpasswordEditableField;
 	private final static String OPT_NAME = "name";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-
-		for (int x = 0; x < 10000; x++) {
-			
-		}
+		setContentView(R.layout.activity_new_user);
 	
 		userNameEditableField = (EditText) findViewById(R.id.username_text);
+		emailEditableField = (EditText) findViewById(R.id.user_email_text);
 		passwordEditableField = (EditText) findViewById(R.id.password_text);
-		View btnLogin = (Button) findViewById(R.id.login_button);
-		btnLogin.setOnClickListener(this);
-		View btnCancel = (Button) findViewById(R.id.cancel_button);
-		btnCancel.setOnClickListener(this);
+		confirmpasswordEditableField = (EditText) findViewById(R.id.confirm_password_text);
+
 		View btnNewUser = (Button) findViewById(R.id.new_user_button);
 		btnNewUser.setOnClickListener(this);
 	}
 
-	private void checkLogin() {
+	private void adduser() {
 		String username = this.userNameEditableField.getText().toString();
+		String email = this.emailEditableField.getText().toString();
 		String password = this.passwordEditableField.getText().toString();
-		this.dh = new Database(this);
-		List<String> names = this.dh.selectAll("Accounts", username, password);
-		if (names.size() > 0) { // Login successful
-			// Save username as the name of the player
-			SharedPreferences settings = PreferenceManager
-					.getDefaultSharedPreferences(this);
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putString(OPT_NAME, username);
-			editor.commit();
-
-			startActivity(new Intent(this, MainActivity.class));
-
+		String confirmpassword = this.passwordEditableField.getText().toString();
+		
+		if ((password.equals(confirmpassword)) && (!username.equals(""))
+				&& (!password.equals("")) && (!confirmpassword.equals(""))) {
+			this.dh = new Database(this);
+			this.dh.insertAccount(username, password);
+			// this.labResult.setText("Added");
+			Toast.makeText(NewUser.this, "new record inserted",
+					Toast.LENGTH_SHORT).show();
 			finish();
-		} else {
-			// Try again?
+		} else if ((username.equals("")) || (password.equals(""))
+				|| (confirmpassword.equals(""))) {
+			Toast.makeText(NewUser.this, "Missing entry", Toast.LENGTH_SHORT)
+					.show();
+		} else if (!password.equals(confirmpassword)) {
 			new AlertDialog.Builder(this)
 					.setTitle("Error")
-					.setMessage("Login failed")
+					.setMessage("passwords do not match")
 					.setNeutralButton("Try Again",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int which) {
 								}
-							}).show();
+							})
+
+					.show();
 		}
 		
+		startActivity(new Intent(this, MainActivity.class));
 	}
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.login_button:
-			checkLogin();
-			break;
-		case R.id.cancel_button:
-			finish();
-			break;
+
 		case R.id.new_user_button:
-			startActivity(new Intent(this, NewUser.class));
+			adduser();
+			//startActivity(new Intent(this, MainActivity.class));
 			break;
 		}
 	}

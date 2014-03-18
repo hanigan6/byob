@@ -38,5 +38,9 @@
         <string name="abv">ABV</string>
         <string name="maker_location">maker_location</string>
         <string name="type">type</string>
+        <string name="user_name">user_name</string>
+        <string name="password">password</string>
+        <string name="confirm_password">confirm_password</string>
+        <string name="user_email">user_email</string>
 
 </resources>

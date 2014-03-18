@@ -46,6 +46,28 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="com.example.beerapp.NewUser"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+            	<action android:name="com.example.beerapp.NewUser" />
+            	<category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+		</activity>
+
+            <activity
+	            android:name="com.example.beerapp.AddBeverage"
+	            android:label="@string/app_name"
+	            android:launchMode="standard"
+	            android:theme="@style/FullscreenTheme" >
+	            <intent-filter>
+	            	<action android:name="com.example.beerapp.AddBeverage" />
+	            	<category android:name="android.intent.category.DEFAULT" />
+	            </intent-filter>
+	        </activity>
+            
          <activity
             android:name="com.example.beerapp.MainActivity"
             android:label="@string/app_name"

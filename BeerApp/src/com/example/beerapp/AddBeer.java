@@ -24,7 +24,7 @@ import android.widget.AdapterView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-public class AddBeverage extends Activity implements OnClickListener {
+public class AddBeer extends Activity implements OnClickListener {
 	private DatabaseBeer dh;
 	private EditText name;
 	private EditText maker;

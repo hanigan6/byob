@@ -36,22 +36,27 @@
         <string name="name">name</string>
         <string name="maker">maker</string>
         <string name="abv">ABV</string>
-        <string name="maker_location">maker_location</string>
+        <string name="maker_location">maker location</string>
         <string name="type">type</string>
-        <string name="user_name">user_name</string>
+        <string name="user_name">user name</string>
         <string name="password">password</string>
-        <string name="confirm_password">confirm_password</string>
-        <string name="user_email">user_email</string>
+        <string name="confirm_password">confirm password</string>
+        <string name="user_email">user email</string>
         <string name="edit_account">edit account</string>
         <string name="logout">logout</string>
         <string name="edit_account_button">edit_account_button</string>
         <string name="logout_button">logout_button</string>
-        <string name="edit_beer">edit_beer</string>
-        <string name="compare_beer">compare_beer</string>
-        <string name="delete_beer">delete_beer</string>
+        <string name="edit_beer">edit beer</string>
+        <string name="compare_beer">compare beer</string>
+        <string name="delete_beer">delete beer</string>
         <string name="findme">findme</string>
         <string name="find">find</string>
         <string name="enter_address_">enter_address_</string>
         <string name="permission_launch_activity">permission_launch_activity</string>
+        <string name="add_wine">add wine</string>
+        <string name="wine_page">wine page</string>
+        <string name="add_liquor">add liquor</string>
+        <string name="liquor_page">liquor page</string>
+        <string name="add_beverage">add beverage</string>
 
 </resources>

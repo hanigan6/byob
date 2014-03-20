@@ -23,8 +23,8 @@ import android.widget.AdapterView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-public class Beer extends Activity implements OnClickListener {
-	private DatabaseBeer dh;
+public class Liquor extends Activity implements OnClickListener {
+	private DatabaseLiquor dh;
 	private EditText search;
 	private Spinner spinner1;
 	
@@ -32,7 +32,7 @@ public class Beer extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("0", "0");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_beer);
+		setContentView(R.layout.activity_liquor);
 		
 		Intent intent = getIntent();
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -41,9 +41,9 @@ public class Beer extends Activity implements OnClickListener {
 	    }
 		
 		search = (EditText) findViewById(R.id.search_text);
-		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
-		btnAddBeer.setOnClickListener(this);
-		this.dh = new DatabaseBeer(this);
+		View btnAddliquor = (Button) findViewById(R.id.add_liquor_button);
+		btnAddliquor.setOnClickListener(this);
+		this.dh = new DatabaseLiquor(this);
 		
 		
 		//spinner1 = (Spinner) findViewById(R.id.sort_spinner);
@@ -51,7 +51,7 @@ public class Beer extends Activity implements OnClickListener {
 		//spnSort.setOnClickListener(this);
 		//spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 		Log.i("1", "1");
-		ListView list = (ListView) findViewById(R.id.beer_list);
+		ListView list = (ListView) findViewById(R.id.liquor_list);
 		          
 		        // defining Adapter for List content
 		       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -76,7 +76,7 @@ public class Beer extends Activity implements OnClickListener {
                     TextView sel = (TextView) arg1;
                     String selectedItem = sel.getText().toString();
                    // startActivity(new Intent(this, SingleBeer.class));
-                    new AlertDialog.Builder(Beer.this)
+                    new AlertDialog.Builder(Liquor.this)
                             .setTitle("Selection Information")
                             .setMessage("You have selected " 
                                     + selectedItem)
@@ -101,8 +101,8 @@ public class Beer extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.add_beer_button:
-			startActivity(new Intent(this, AddBeer.class));
+		case R.id.add_liquor_button:
+			startActivity(new Intent(this, AddLiquor.class));
 			break;
 		
 					

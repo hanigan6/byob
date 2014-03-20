@@ -51,7 +51,7 @@ public class SingleBeer extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.add_beer_button:
-			startActivity(new Intent(this, AddBeverage.class));
+			startActivity(new Intent(this, AddBeer.class));
 			break;
 		
 					

@@ -42,11 +42,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.Wine_button:
 			startActivity(new Intent(
-					"com.example.beerapp.Beer"));
+					"com.example.beerapp.Wine"));
 			break;
 		case R.id.Liquor_button:
 			startActivity(new Intent(
-					"com.example.beerapp.Beer"));
+					"com.example.beerapp.Liquor"));
 			break;		
 		case R.id.Map_button:
 			startActivity(new Intent(

@@ -68,30 +68,29 @@ public class Beer extends Activity implements OnClickListener {
 		       
 		       list.setAdapter(adapter);
 		       
-		       list.setOnItemClickListener(new 
-		    		                AdapterView.OnItemClickListener() {
-		    		                @Override
-		    		                public void onItemClick(AdapterView<?> arg0, 
-		    		                        View arg1, 
-		    		                        int arg2,
-		    		                        long arg3) {
-		    		                    TextView sel = (TextView) arg1;
-		    		                    String selectedItem = sel.getText().toString();
-		    		                    new AlertDialog.Builder(Beer.this)
-		    		                            .setTitle("Selection Information")
-		    		                            .setMessage("You have selected " 
-		    		                                    + selectedItem)
-		    		                            .setNeutralButton("OK",
-		    		                                new DialogInterface.OnClickListener() {
-		    		                                    public void onClick(
-		    		                                            DialogInterface dialog,
-		    		                                            int whichButton) {
-		    		     
-		    		                                    }
-		    		                                }).show();
-		    		                }
-		    		     
-		    		            });
+		       list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                	
+                	
+                    TextView sel = (TextView) arg1;
+                    String selectedItem = sel.getText().toString();
+                   // startActivity(new Intent(this, SingleBeer.class));
+                    new AlertDialog.Builder(Beer.this)
+                            .setTitle("Selection Information")
+                            .setMessage("You have selected " 
+                                    + selectedItem)
+                            .setNeutralButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(
+                                            DialogInterface dialog,
+                                            int whichButton) {
+     
+                                    }
+                                }).show();
+                }
+     
+            }); 
 	}
 	
 	private void doMySearch(String query) {

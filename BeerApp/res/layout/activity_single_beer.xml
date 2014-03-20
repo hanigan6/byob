@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-		 <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="10dip"
-	            android:layout_gravity="left"
-	            android:text="@string/maker"
-	            android:textSize="15.5sp" />
+		 <ListView
+			    android:id="@+id/beer_stats"
+			    android:layout_marginTop="20dip"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			>
+		 </ListView>
 		 
 		 <Button
 	            android:id="@+id/edit_beer_button"
@@ -32,4 +32,5 @@
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="110dip"
 	            android:text="@string/delete_beer" />
+		 
 </LinearLayout>

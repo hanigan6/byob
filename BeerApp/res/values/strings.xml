@@ -46,5 +46,8 @@
         <string name="logout">logout</string>
         <string name="edit_account_button">edit_account_button</string>
         <string name="logout_button">logout_button</string>
+        <string name="edit_beer">edit_beer</string>
+        <string name="compare_beer">compare_beer</string>
+        <string name="delete_beer">delete_beer</string>
 
 </resources>

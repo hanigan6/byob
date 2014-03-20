@@ -24,14 +24,27 @@ import android.content.DialogInterface;
 
 public class SingleBeer extends Activity implements OnClickListener {
 	private DatabaseBeer dh;
+	private String BeerName;
 	
+	public SingleBeer(String name) {
+		BeerName = name;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("0", "0");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_beer);
+		setContentView(R.layout.activity_single_beer);
 		this.dh = new DatabaseBeer(this);
+		
+		ListView list = (ListView) findViewById(R.id.beer_stats);
+		
+		View btnEditBeer = (Button) findViewById(R.id.edit_beer_button);
+		btnEditBeer.setOnClickListener(this);
+		View btnCmpBeer = (Button) findViewById(R.id.compare_beer_button);
+		btnCmpBeer.setOnClickListener(this);
+		View btnDelBeer = (Button) findViewById(R.id.delete_beer_button);
+		btnDelBeer.setOnClickListener(this);
 	}
 	
 	@Override

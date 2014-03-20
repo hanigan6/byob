@@ -39,7 +39,6 @@ public class DatabaseBeer {
 		   }
 		   
 		   public void deleteAll(String table) {
-
 		      this.db.delete(table, null, null);
 		   }
 		  

@@ -63,6 +63,8 @@ public class AddBeverage extends Activity implements OnClickListener {
 			Log.i("5", "5");
 			this.dh = new DatabaseBeer(this);
 			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, 5);
+			startActivity(new Intent("com.example.beerapp.Beer"));
+			
 			break;
 					
 		}

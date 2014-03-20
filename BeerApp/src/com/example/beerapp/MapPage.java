@@ -25,13 +25,19 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
 
+
 public class MapPage extends Activity implements OnClickListener,
 		LocationListener {
 	private EditText mEditLocation;
 	private GoogleMap mMap;
 	private MapView mMapView;
 	private String mProvider = null;
-	
+	private Button mButtonFindme;
+	private String whereAmIString = null;
+	private Button mButtonLocate;
+	private static final String WHEREAMISTRING = "WhereAmIString";
+	private static final String TAG = "WhereAmI";
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
@@ -46,20 +52,32 @@ public class MapPage extends Activity implements OnClickListener,
 			mMap.setMyLocationEnabled(true);
 		}
 
+		mEditLocation = (EditText) findViewById(R.id.location);
+
+		mButtonLocate = (Button) findViewById(R.id.button_locate);
+		mButtonLocate.setOnClickListener(this);
+
+		mButtonFindme = (Button) findViewById(R.id.button_findme);
+		mButtonFindme.setOnClickListener(this);
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		if (whereAmIString != null)
+			outState.putString(WHEREAMISTRING, whereAmIString);
 	}
 
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		
+		whereAmIString = savedInstanceState.getString(WHEREAMISTRING);
+		if (whereAmIString != null)
+			mEditLocation.setText(whereAmIString);
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
-		
+		Log.d(TAG, "Location changed to: " + location.getLatitude() + ", "
+				+ location.getLongitude());
 	}
 
 	@Override
@@ -82,7 +100,6 @@ public class MapPage extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		/*
 		switch (v.getId()) {
 		case R.id.button_locate:
 			try {
@@ -124,7 +141,7 @@ public class MapPage extends Activity implements OnClickListener,
 						.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			}
 			try {
-				MapsInitializer.initialize(WhereAmI.this);
+				MapsInitializer.initialize(MapPage.this);
 			} catch (GooglePlayServicesNotAvailableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -134,7 +151,5 @@ public class MapPage extends Activity implements OnClickListener,
 			mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 8));
 			break;
 		}
-		*/
 	}
-
 }

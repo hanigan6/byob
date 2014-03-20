@@ -49,5 +49,9 @@
         <string name="edit_beer">edit_beer</string>
         <string name="compare_beer">compare_beer</string>
         <string name="delete_beer">delete_beer</string>
+        <string name="findme">findme</string>
+        <string name="find">find</string>
+        <string name="enter_address_">enter_address_</string>
+        <string name="permission_launch_activity">permission_launch_activity</string>
 
 </resources>

@@ -37,8 +37,8 @@ public class Database {
 	   
 	   public Database(Context context) {
 	      this.context = context;
-	      TicTacToeOpenHelper openHelper = new TicTacToeOpenHelper(this.context);
-	      this.db = openHelper.getWritableDatabase();
+	      
+	      
 	      this.insertStmt = this.db.compileStatement(INSERT);
 	   }
 
@@ -67,8 +67,8 @@ public class Database {
 	      return list;
 	   }
 	   
-	   private static class TicTacToeOpenHelper extends SQLiteOpenHelper {
-		   TicTacToeOpenHelper(Context context) {
+	   private static class ACCTDatabase extends SQLiteOpenHelper {
+		   ACCTDatabase(Context context) {
 	    	  super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	      }
 
@@ -76,7 +76,6 @@ public class Database {
 	      public void onCreate(SQLiteDatabase db) {
 	         db.execSQL("CREATE TABLE " + TABLE_NAME1 + "(id INTEGER PRIMARY KEY, name TEXT, password TEXT)");
 	      }
-
 	      @Override
 	      public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -85,5 +84,8 @@ public class Database {
 	         onCreate(db);
 	      }
 	   }
+	   
+
+	   
 
 }

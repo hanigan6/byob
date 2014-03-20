@@ -78,7 +78,8 @@ public class Login extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.login_button:
-			checkLogin();
+			//checkLogin();
+			startActivity(new Intent(this, MainActivity.class));
 			break;
 		case R.id.cancel_button:
 			finish();

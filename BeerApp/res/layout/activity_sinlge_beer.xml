@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+		 <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/maker"
+	            android:textSize="15.5sp" />
+		 
+		 <Button
+	            android:id="@+id/edit_beer_button"
+	            android:layout_width="100dip"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="110dip"
+	            android:text="@string/edit_beer" />
+		 
+		 <Button
+	            android:id="@+id/compare_beer_button"
+	            android:layout_width="100dip"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="110dip"
+	            android:text="@string/compare_beer" />
+		 
+		 <Button
+	            android:id="@+id/delete_beer_button"
+	            android:layout_width="100dip"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="110dip"
+	            android:text="@string/delete_beer" />
+</LinearLayout>

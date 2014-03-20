@@ -48,6 +48,14 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(
 					"com.example.beerapp.Beer"));
 			break;		
+		case R.id.Map_button:
+			startActivity(new Intent(
+					"com.example.beerapp.MapPage"));
+			break;	
+		case R.id.Settings_button:
+			startActivity(new Intent(
+					"com.example.beerapp.Settings"));
+			break;	
 		}
 	}
 

@@ -1,6 +1,8 @@
 package com.example.beerapp;
 
 
+
+
 import android.os.Bundle;
 
 
@@ -8,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,13 +20,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Spinner;
-
 import android.widget.AdapterView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class AddBeverage extends Activity implements OnClickListener {
+	private DatabaseBeer dh;
 	private EditText name;
+	private EditText maker;
+	private EditText maker_location;
+	private EditText ABV;
+	private EditText type;
 	private Spinner spinner1;
 	
 	@Override
@@ -33,10 +40,10 @@ public class AddBeverage extends Activity implements OnClickListener {
 		
 		
 		name = (EditText) findViewById(R.id.name_text);
-		name = (EditText) findViewById(R.id.maker_text);
-		name = (EditText) findViewById(R.id.maker_location_text);
-		name = (EditText) findViewById(R.id.ABV_text);
-		name = (EditText) findViewById(R.id.type_text);
+		maker = (EditText) findViewById(R.id.maker_text);
+		maker_location = (EditText) findViewById(R.id.maker_location_text);
+		ABV = (EditText) findViewById(R.id.ABV_text);
+		type = (EditText) findViewById(R.id.type_text);
 		
 		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
 		btnAddBeer.setOnClickListener(this);
@@ -48,7 +55,14 @@ public class AddBeverage extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.add_beer_button:
-			//checkLogin();
+			String nametext = this.name.getText().toString();
+			String makertext = this.maker.getText().toString();
+			String makerloctext = this.maker_location.getText().toString();
+			String ABVtext = this.ABV.getText().toString();
+			String typetext = this.type.getText().toString();
+			Log.i("5", "5");
+			this.dh = new DatabaseBeer(this);
+			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, 5);
 			break;
 					
 		}

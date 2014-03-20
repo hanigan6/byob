@@ -42,5 +42,9 @@
         <string name="password">password</string>
         <string name="confirm_password">confirm_password</string>
         <string name="user_email">user_email</string>
+        <string name="edit_account">edit account</string>
+        <string name="logout">logout</string>
+        <string name="edit_account_button">edit_account_button</string>
+        <string name="logout_button">logout_button</string>
 
 </resources>

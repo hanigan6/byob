@@ -34,6 +34,7 @@ public class AddWine extends Activity implements OnClickListener {
 	private EditText ABV;
 	private EditText type;
 	private Spinner spinner1;
+	private RatingBar ratingBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class AddWine extends Activity implements OnClickListener {
 		maker_location = (EditText) findViewById(R.id.maker_location_text);
 		ABV = (EditText) findViewById(R.id.ABV_text);
 		type = (EditText) findViewById(R.id.type_text);
+		
+		ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		
 		View btnAddwine = (Button) findViewById(R.id.add_beverage_button);
 		btnAddwine.setOnClickListener(this);
@@ -62,9 +65,10 @@ public class AddWine extends Activity implements OnClickListener {
 			String makerloctext = this.maker_location.getText().toString();
 			String ABVtext = this.ABV.getText().toString();
 			String typetext = this.type.getText().toString();
+			String ratingtext = String.valueOf(ratingBar.getRating());
 			Log.i("5", "5");
 			this.dh = new DatabaseWine(this);
-			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, "5");
+			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, ratingtext);
 			startActivity(new Intent("com.example.beerapp.Wine"));
 			
 			break;

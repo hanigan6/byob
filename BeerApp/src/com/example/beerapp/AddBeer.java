@@ -54,6 +54,7 @@ public class AddBeer extends Activity implements OnClickListener {
 		
 		//View ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		//ratingBar.setOnClickListener(this);
+		ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		
 		View btnAddBeer = (Button) findViewById(R.id.add_beverage_button);	
 		btnAddBeer.setOnClickListener(this);
@@ -71,7 +72,7 @@ public class AddBeer extends Activity implements OnClickListener {
 			String makerloctext = this.maker_location.getText().toString();
 			String ABVtext = this.ABV.getText().toString();
 			String typetext = this.type.getText().toString();
-			String ratingtext = "5";//String.valueOf(ratingBar.getRating());
+			String ratingtext = String.valueOf(ratingBar.getRating());
 			Log.i("5", "5");
 			this.dh = new DatabaseBeer(this);
 			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, ratingtext);

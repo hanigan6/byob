@@ -60,16 +60,40 @@ public class AddLiquor extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.add_beverage_button:
 			String nametext = this.name.getText().toString();
-			String makertext = this.maker.getText().toString();
-			String makerloctext = this.maker_location.getText().toString();
-			String ABVtext = this.ABV.getText().toString();
-			String typetext = this.type.getText().toString();
-			String ratingtext = String.valueOf(ratingBar.getRating());
-			Log.i("5", "5");
-			this.dh = new DatabaseLiquor(this);
-			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, ratingtext);
-			startActivity(new Intent("com.example.beerapp.Liquor"));
-			
+			if (nametext.equals("")) {
+				new AlertDialog.Builder(AddLiquor.this)
+	            .setTitle("Name cannot be empty")
+	            .setNeutralButton("OK",
+	                new DialogInterface.OnClickListener() {
+	                    public void onClick(
+	                            DialogInterface dialog,
+	                            int whichButton) {
+	
+	                    }
+	                }).show();
+			}
+			else if (this.dh.contains(nametext)) {
+				new AlertDialog.Builder(AddLiquor.this)
+	            .setTitle("Beer already exists")
+	            .setNeutralButton("OK",
+	                new DialogInterface.OnClickListener() {
+	                    public void onClick(
+	                            DialogInterface dialog,
+	                            int whichButton) {
+	
+	                    }
+	                }).show();
+			}
+			else {
+				String makertext = this.maker.getText().toString();
+				String makerloctext = this.maker_location.getText().toString();
+				String ABVtext = this.ABV.getText().toString();
+				String typetext = this.type.getText().toString();
+				String ratingtext = String.valueOf(ratingBar.getRating());
+				this.dh = new DatabaseLiquor(this);
+				this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, ratingtext);
+				startActivity(new Intent("com.example.beerapp.Liquor"));
+			}
 			break;
 					
 		}

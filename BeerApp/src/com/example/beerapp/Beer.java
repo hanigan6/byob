@@ -4,7 +4,6 @@ package com.example.beerapp;
 import java.util.List;
 
 import android.os.Bundle;
-
 import android.widget.ArrayAdapter;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -22,11 +21,13 @@ import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 
 public class Beer extends Activity implements OnClickListener {
 	private DatabaseBeer dh;
 	private EditText search;
 	private Spinner spinner1;
+	private String selection;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,7 @@ public class Beer extends Activity implements OnClickListener {
 		       while (names.size() > 0) {
 		    	   adapter.add(names.remove(0));
 		       }
-		       Log.i("4", "4");
-		       //adapter.add("One");
-		       //adapter.add("Two");
+		      
 		       
 		       list.setAdapter(adapter);
 		       
@@ -73,9 +72,13 @@ public class Beer extends Activity implements OnClickListener {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 	
                 	
+                	
                     TextView sel = (TextView) arg1;
+                    
                     String selectedItem = sel.getText().toString();
-                   // startActivity(new Intent(this, SingleBeer.class));
+                    selection = selectedItem;
+                    showBeer();
+                   /*
                     new AlertDialog.Builder(Beer.this)
                             .setTitle("Selection Information")
                             .setMessage("You have selected " 
@@ -88,9 +91,44 @@ public class Beer extends Activity implements OnClickListener {
      
                                     }
                                 }).show();
+                                */
                 }
      
             }); 
+		      
+		       
+	}
+	
+	private void showBeer () {
+		 Log.i("4", "4");
+	       Cursor cursor = this.dh.select(selection);
+	       Log.i("5", "5");
+	       new AlertDialog.Builder(Beer.this)
+         .setTitle("Selection Information")
+         .setMessage( cursordisplay(cursor))//cursor.getString(0) + cursor.getString(1) + cursor.getString(2) + cursor.getString(3) + cursor.getString(4)
+        		// + cursor.getString(5) + cursor.getString(6))
+         .setNeutralButton("OK",
+             new DialogInterface.OnClickListener() {
+                 public void onClick(
+                         DialogInterface dialog,
+                         int whichButton) {
+
+                 }
+             }).show();
+	       Log.i("6", "6");
+	}
+	
+	private String cursordisplay(Cursor curse) {
+		String retur= new String();
+		if (curse.moveToFirst()) {
+	        do {
+	        	Log.i(curse.getString(0), "qwe");
+	        	 retur.concat(curse.getString(0) + "\n");
+	        	 
+	         } while (curse.moveToNext()); 
+	      }
+
+		return retur;
 	}
 	
 	private void doMySearch(String query) {
@@ -104,8 +142,11 @@ public class Beer extends Activity implements OnClickListener {
 		case R.id.add_beer_button:
 			startActivity(new Intent(this, AddBeer.class));
 			break;
-		
-					
+		/*
+		case R.id.beer_list:
+			startActivity(new Intent(this, ))
+			break;
+			*/
 		}
 	}
 

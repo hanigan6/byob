@@ -41,6 +41,20 @@ public class DatabaseBeer {
 		   public void deleteAll(String table) {
 		      this.db.delete(TABLE_NAME, null, null);
 		   }
+		   
+		   public boolean contains(String name) {
+			   String search = "name = \"" + name + "\"";
+			      Cursor cursor = this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc", null);
+			      return (cursor.getColumnCount() == 0);
+		   }
+		   
+		   public Cursor select(String name) {
+			   
+			   		String search = "name = \"" + name + "\"";
+			      return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc", null);
+			      
+			    
+		   }
 		  
 		   public List<String> selectAll(String sort) {
 			  String sortline = sort + " desc";

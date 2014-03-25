@@ -62,7 +62,7 @@ public class AddLiquor extends Activity implements OnClickListener {
 			String typetext = this.type.getText().toString();
 			Log.i("5", "5");
 			this.dh = new DatabaseLiquor(this);
-			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, 5);
+			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, "5");
 			startActivity(new Intent("com.example.beerapp.Liquor"));
 			
 			break;

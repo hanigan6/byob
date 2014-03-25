@@ -28,18 +28,18 @@ public class DatabaseBeer {
 		      this.insertStmt = this.db.compileStatement(INSERT);
 		   }
 
-		   public long insert(String name, String maker, String maker_location, String type, String ABV, int rating) {
+		   public long insert(String name, String maker, String maker_location, String type, String ABV, String rating) {
 		      this.insertStmt.bindString(1, name);
 		      this.insertStmt.bindString(2, maker);
 		      this.insertStmt.bindString(3, maker_location);
 		      this.insertStmt.bindString(4, type);
 		      this.insertStmt.bindString(5, ABV);
-		      this.insertStmt.bindLong(6, rating);
+		      this.insertStmt.bindString(6, rating);
 		      return this.insertStmt.executeInsert();
 		   }
 		   
 		   public void deleteAll(String table) {
-		      this.db.delete(table, null, null);
+		      this.db.delete(TABLE_NAME, null, null);
 		   }
 		  
 		   public List<String> selectAll(String sort) {

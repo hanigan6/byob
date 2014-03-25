@@ -17,5 +17,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:text="@string/logout" />
+    
+    <Button
+            android:id="@+id/drop_tables_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:text="@string/reset_databases" />
 
 </LinearLayout>

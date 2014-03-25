@@ -58,5 +58,6 @@
         <string name="add_liquor">add liquor</string>
         <string name="liquor_page">liquor page</string>
         <string name="add_beverage">add beverage</string>
+        <string name="reset_databases">reset databases</string>
 
 </resources>

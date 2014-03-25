@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 
 public class AddWine extends Activity implements OnClickListener {
 	private DatabaseWine dh;
@@ -62,7 +64,7 @@ public class AddWine extends Activity implements OnClickListener {
 			String typetext = this.type.getText().toString();
 			Log.i("5", "5");
 			this.dh = new DatabaseWine(this);
-			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, 5);
+			this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, "5");
 			startActivity(new Intent("com.example.beerapp.Wine"));
 			
 			break;

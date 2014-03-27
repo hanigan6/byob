@@ -4,6 +4,7 @@ package com.example.beerapp;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,8 +50,9 @@ public class MainActivity extends Activity implements OnClickListener {
 					"com.example.beerapp.Liquor"));
 			break;		
 		case R.id.Map_button:
+			Log.i("map", "0");
 			startActivity(new Intent(
-					"com.example.beerapp.MapPage"));
+					"com.example.beerapp.Location"));
 			break;	
 		case R.id.Settings_button:
 			startActivity(new Intent(

@@ -34,7 +34,7 @@ public class SplashScreen extends Activity {
 				} finally {
 					finish();
 					startActivity(new Intent(
-							"com.example.beerapp.Login"));
+							"com.example.beerapp.MainActivity"));
 				}
 			}
 		};

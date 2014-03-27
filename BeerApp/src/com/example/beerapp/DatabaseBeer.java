@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,13 +46,14 @@ public class DatabaseBeer {
 		   public boolean contains(String name) {
 			   String search = "name = \"" + name + "\"";
 			      Cursor cursor = this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc", null);
-			      return (cursor.getColumnCount() == 0);
+			      return (cursor.getColumnCount() == 1);
 		   }
 		   
 		   public Cursor select(String name) {
 			   
 			   		String search = "name = \"" + name + "\"";
-			      return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc", null);
+//Cursor cursor = this.db.query(TABLE_NAME, new String[] { "name", "password" }, "name = '"+ username +"' AND password= '"+ password+"'", null, null, null, "name desc");
+			      return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
 			      
 			    
 		   }
@@ -60,7 +62,7 @@ public class DatabaseBeer {
 			  String sortline = sort + " desc";
 		      List<String> list = new ArrayList<String>();
 		      Log.i("d0", "d0");
-		      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name"},  null,  null, null, null,  "name desc", null);
+		      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name"},  null,  null, null, null,  sortline, null);
 		      Log.i("d1", "d1");
 		      if (cursor.moveToFirst()) {
 		        do {

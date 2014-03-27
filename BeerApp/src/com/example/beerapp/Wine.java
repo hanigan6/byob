@@ -4,7 +4,6 @@ package com.example.beerapp;
 import java.util.List;
 
 import android.os.Bundle;
-
 import android.widget.ArrayAdapter;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -22,11 +21,13 @@ import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 
 public class Wine extends Activity implements OnClickListener {
 	private DatabaseWine dh;
 	private EditText search;
 	private Spinner spinner1;
+	private String selection;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,24 +74,43 @@ public class Wine extends Activity implements OnClickListener {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 	
                 	
-                    TextView sel = (TextView) arg1;
+TextView sel = (TextView) arg1;
+                    
                     String selectedItem = sel.getText().toString();
-                   // startActivity(new Intent(this, SingleBeer.class));
-                    new AlertDialog.Builder(Wine.this)
-                            .setTitle("Selection Information")
-                            .setMessage("You have selected " 
-                                    + selectedItem)
-                            .setNeutralButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(
-                                            DialogInterface dialog,
-                                            int whichButton) {
-     
-                                    }
-                                }).show();
+                    selection = selectedItem;
+                    showWine();
                 }
      
             }); 
+	}
+	
+	private void showWine () {
+		 Log.i("4", "4");
+		 StringBuilder retur = new StringBuilder();
+	       Cursor curse = this.dh.select(selection);
+	       if (curse.moveToFirst()) {
+		        do {
+		        	for (int x = 0; x < curse.getColumnCount(); x ++) {
+		    			Log.i("cc", "retur");
+		    			retur.append(curse.getString(x) + "\n");
+		    		}
+		        	 //retur.concat(curse.getString(0) + "\n");
+		        	 
+		         } while (curse.moveToNext()); 
+		      }
+	       Log.i("5", "5");
+	       new AlertDialog.Builder(Wine.this)
+       .setTitle("Selection Information")
+       .setMessage( retur)
+       .setNeutralButton("OK",
+           new DialogInterface.OnClickListener() {
+               public void onClick(
+                       DialogInterface dialog,
+                       int whichButton) {
+
+               }
+           }).show();
+	       Log.i("6", "6");
 	}
 	
 	private void doMySearch(String query) {

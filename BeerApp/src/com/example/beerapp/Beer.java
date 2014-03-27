@@ -1,6 +1,7 @@
 package com.example.beerapp;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class Beer extends Activity implements OnClickListener {
 	private EditText search;
 	private Spinner spinner1;
 	private String selection;
+	private String spinnerSelect;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,14 @@ public class Beer extends Activity implements OnClickListener {
 		search = (EditText) findViewById(R.id.search_text);
 		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
 		btnAddBeer.setOnClickListener(this);
+
 		this.dh = new DatabaseBeer(this);
 		
 		
-		//spinner1 = (Spinner) findViewById(R.id.sort_spinner);
+		spinner1 = (Spinner) findViewById(R.id.sort_spinner);
 		//View spnSort = (Spinner) findViewById(R.id.sort_spinner);
 		//spnSort.setOnClickListener(this);
-		//spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+		spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 		Log.i("1", "1");
 		ListView list = (ListView) findViewById(R.id.beer_list);
 		          
@@ -58,7 +61,7 @@ public class Beer extends Activity implements OnClickListener {
 		       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 		            android.R.layout.simple_list_item_1);
 		       Log.i("2", "2");
-		       List<String> names = this.dh.selectAll("name");
+		       List<String> names = this.dh.selectAll(String.valueOf(spinner1.getSelectedItem()));
 		       Log.i("3", "3");
 		       while (names.size() > 0) {
 		    	   adapter.add(names.remove(0));
@@ -78,20 +81,7 @@ public class Beer extends Activity implements OnClickListener {
                     String selectedItem = sel.getText().toString();
                     selection = selectedItem;
                     showBeer();
-                   /*
-                    new AlertDialog.Builder(Beer.this)
-                            .setTitle("Selection Information")
-                            .setMessage("You have selected " 
-                                    + selectedItem)
-                            .setNeutralButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(
-                                            DialogInterface dialog,
-                                            int whichButton) {
-     
-                                    }
-                                }).show();
-                                */
+              
                 }
      
             }); 
@@ -101,12 +91,22 @@ public class Beer extends Activity implements OnClickListener {
 	
 	private void showBeer () {
 		 Log.i("4", "4");
-	       Cursor cursor = this.dh.select(selection);
+		 StringBuilder retur = new StringBuilder();
+	       Cursor curse = this.dh.select(selection);
+	       if (curse.moveToFirst()) {
+		        do {
+		        	for (int x = 0; x < curse.getColumnCount(); x ++) {
+		    			Log.i("cc", "retur");
+		    			retur.append(curse.getString(x) + "\n");
+		    		}
+		        	 //retur.concat(curse.getString(0) + "\n");
+		        	 
+		         } while (curse.moveToNext()); 
+		      }
 	       Log.i("5", "5");
 	       new AlertDialog.Builder(Beer.this)
          .setTitle("Selection Information")
-         .setMessage( cursordisplay(cursor))//cursor.getString(0) + cursor.getString(1) + cursor.getString(2) + cursor.getString(3) + cursor.getString(4)
-        		// + cursor.getString(5) + cursor.getString(6))
+         .setMessage( retur)
          .setNeutralButton("OK",
              new DialogInterface.OnClickListener() {
                  public void onClick(
@@ -119,15 +119,21 @@ public class Beer extends Activity implements OnClickListener {
 	}
 	
 	private String cursordisplay(Cursor curse) {
-		String retur= new String();
+		String retur= "test";
+		System.out.println(curse.toString());
+		List<String> list = new ArrayList<String>();
+
 		if (curse.moveToFirst()) {
 	        do {
-	        	Log.i(curse.getString(0), "qwe");
-	        	 retur.concat(curse.getString(0) + "\n");
+	        	for (int x = 0; x < curse.getColumnCount(); x ++) {
+	    			Log.i("cc", "retur");
+	    			retur.concat(curse.getString(x) + "\n");
+	    		}
+	        	 //retur.concat(curse.getString(0) + "\n");
 	        	 
 	         } while (curse.moveToNext()); 
 	      }
-
+		retur.concat("end");
 		return retur;
 	}
 	
@@ -142,6 +148,7 @@ public class Beer extends Activity implements OnClickListener {
 		case R.id.add_beer_button:
 			startActivity(new Intent(this, AddBeer.class));
 			break;
+
 		/*
 		case R.id.beer_list:
 			startActivity(new Intent(this, ))

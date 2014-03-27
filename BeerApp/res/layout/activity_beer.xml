@@ -39,7 +39,7 @@
 	            android:layout_marginLeft="145dip"
 	            android:entries="@array/sort_options"
 	            android:prompt="@string/sort_prompt" />
-
+	        
 	        <Button
 	            android:id="@+id/add_beer_button"
 	            android:layout_width="100dip"
@@ -55,6 +55,8 @@
 			    android:layout_alignParentLeft="true"
 			    android:layout_alignParentTop="true" >
 			</ListView>
+
+
 	        
 	</RelativeLayout>
 

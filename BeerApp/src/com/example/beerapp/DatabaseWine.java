@@ -6,6 +6,7 @@ import java.util.List;
 
 
 
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -42,6 +43,15 @@ public class DatabaseWine {
 		   public void deleteAll(String table) {
 		      this.db.delete(TABLE_NAME, null, null);
 		   }
+		   
+		   public Cursor select(String name) {
+			   
+		   		String search = "name = \"" + name + "\"";
+//Cursor cursor = this.db.query(TABLE_NAME, new String[] { "name", "password" }, "name = '"+ username +"' AND password= '"+ password+"'", null, null, null, "name desc");
+		      return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
+		      
+		    
+	   }
 		   
 		   public boolean contains(String name) {
 			   List<String> list = new ArrayList<String>();

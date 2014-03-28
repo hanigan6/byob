@@ -7,6 +7,7 @@ import java.util.List;
 
 
 
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,23 +55,9 @@ public class DatabaseWine {
 	   }
 		   
 		   public boolean contains(String name) {
-			   List<String> list = new ArrayList<String>();
-
-			      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name"},  null,  null, null, null,  "name desc", null);
-
-			      if (cursor.moveToFirst()) {
-			        do {
-			        	
-			        	 list.add(cursor.getString(0));
-			        	 //list.add(cursor.getString(1));
-			         } while (cursor.moveToNext()); 
-			      }
-
-			      if (cursor != null && !cursor.isClosed()) {
-			         cursor.close();
-			      }
-			      return list.contains(name);
-			      
+			   String search = "name = \"" + name + "\"";
+			    Cursor cursor = this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
+			    return (cursor.getCount() == 1);
 		   }
 		  
 		   public List<String> selectAll(String sort) {

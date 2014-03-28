@@ -64,8 +64,12 @@ public class AddBeer extends Activity implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-
+		this.dh = new DatabaseBeer(this);
+		Log.i("xx", "yy");
+		this.dh.contains(this.name.getText().toString());
+		Log.i("xx", "yy");
 		switch (v.getId()) {
+		
 		case R.id.add_beverage_button:
 			String nametext = this.name.getText().toString();
 			if (nametext.equals("")) {
@@ -80,7 +84,7 @@ public class AddBeer extends Activity implements OnClickListener {
 	                    }
 	                }).show();
 			}
-			/*else if (this.dh.contains(nametext)) {
+			else if (this.dh.contains(nametext)) {
 				new AlertDialog.Builder(AddBeer.this)
 	            .setTitle("Beer already exists")
 	            .setNeutralButton("OK",
@@ -91,14 +95,14 @@ public class AddBeer extends Activity implements OnClickListener {
 	
 	                    }
 	                }).show();
-			}*/
+			}
 			else {
 				String makertext = this.maker.getText().toString();
 				String makerloctext = this.maker_location.getText().toString();
 				String ABVtext = this.ABV.getText().toString();
 				String typetext = this.type.getText().toString();
 				String ratingtext = String.valueOf(ratingBar.getRating());
-				this.dh = new DatabaseBeer(this);
+				
 				this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, ratingtext);
 				startActivity(new Intent("com.example.beerapp.Beer"));
 			}

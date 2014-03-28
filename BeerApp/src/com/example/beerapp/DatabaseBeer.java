@@ -44,9 +44,9 @@ public class DatabaseBeer {
 		   }
 		   
 		   public boolean contains(String name) {
-			   String search = "name = \"" + name + "\"";
-			      Cursor cursor = this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc", null);
-			      return (cursor.getColumnCount() == 1);
+			   	String search = "name = \"" + name + "\"";
+			    Cursor cursor = this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
+			    return (cursor.getCount() == 1);
 		   }
 		   
 		   public Cursor select(String name) {

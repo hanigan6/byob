@@ -57,6 +57,7 @@ public class AddLiquor extends Activity implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
+		this.dh = new DatabaseLiquor(this);
 		switch (v.getId()) {
 		case R.id.add_beverage_button:
 			String nametext = this.name.getText().toString();
@@ -74,7 +75,7 @@ public class AddLiquor extends Activity implements OnClickListener {
 			}
 			else if (this.dh.contains(nametext)) {
 				new AlertDialog.Builder(AddLiquor.this)
-	            .setTitle("Beer already exists")
+	            .setTitle("Liquor already exists")
 	            .setNeutralButton("OK",
 	                new DialogInterface.OnClickListener() {
 	                    public void onClick(
@@ -90,7 +91,7 @@ public class AddLiquor extends Activity implements OnClickListener {
 				String ABVtext = this.ABV.getText().toString();
 				String typetext = this.type.getText().toString();
 				String ratingtext = String.valueOf(ratingBar.getRating());
-				this.dh = new DatabaseLiquor(this);
+				
 				this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, ratingtext);
 				startActivity(new Intent("com.example.beerapp.Liquor"));
 			}

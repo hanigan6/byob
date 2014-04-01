@@ -1,4 +1,9 @@
-High Priority:
+Required for 15th due date:
+Performance Addressed - Demonstrate using profiler
+NFR address - UI changes etc.
+Unit Testing
+
+High Priority Items to add:
 Add a remove function to remove certain items from the users database
 Add Edit Function
 Search Function

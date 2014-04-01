@@ -1,0 +1,4 @@
+Add a remove function to remove certain items from the users database
+Add Edit Function
+Search Function
+Sort based on different things - Rating, Name, Type.

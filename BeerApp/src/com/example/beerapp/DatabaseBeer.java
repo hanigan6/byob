@@ -15,12 +15,12 @@ import android.util.Log;
 
 public class DatabaseBeer {
 		private static final String DATABASE_NAME = "BeerAppBeer.db";
-		   private static final int DATABASE_VERSION = 1;
+		   private static final int DATABASE_VERSION = 2;
 		   private static final String TABLE_NAME = "Beer";
 		   private Context context;
 		   private SQLiteDatabase db;
 		   private SQLiteStatement insertStmt;
-		   private static final String INSERT = "insert into " + TABLE_NAME + "(name, maker, maker_location, type, ABV, rating) values (?, ?, ?, ?, ?, ?)" ;
+		   private static final String INSERT = "insert into " + TABLE_NAME + "(name, maker, maker_location, type, ABV, lat, lng, rating) values (?, ?, ?, ?, ?, ?, ?, ?)" ;
 		   
 		   public DatabaseBeer(Context context) {
 		      this.context = context;
@@ -28,19 +28,31 @@ public class DatabaseBeer {
 		      this.db = openHelper.getWritableDatabase();
 		      this.insertStmt = this.db.compileStatement(INSERT);
 		   }
+		   
+		   public Cursor search(String searchtext) {
+			   //SELECT count(*) FROM enrondata2 WHERE content LIKE '%linux%'
+			   String search = "content LIKE '%" + searchtext + "%'";
+			   return this.db.query(TABLE_NAME, new String[] {"name"},  search,  null, null, null,  "name desc");
+		   }
+		   
+		   public Cursor MapData() {
+			   return this.db.query(TABLE_NAME, new String[] {"name", "lat", "lng"},  null,  null, null, null,  "name desc");
+		   }
 
-		   public long insert(String name, String maker, String maker_location, String type, String ABV, String rating) {
+		   public long insert(String name, String maker, String maker_location, String type, String ABV, Double lat, Double lng, String rating) {
 		      this.insertStmt.bindString(1, name);
 		      this.insertStmt.bindString(2, maker);
 		      this.insertStmt.bindString(3, maker_location);
 		      this.insertStmt.bindString(4, type);
 		      this.insertStmt.bindString(5, ABV);
-		      this.insertStmt.bindString(6, rating);
+		      this.insertStmt.bindDouble(6, lat);
+		      this.insertStmt.bindDouble(7, lng);
+		      this.insertStmt.bindString(8, rating);
 		      return this.insertStmt.executeInsert();
 		   }
 		   
 		   public void deleteAll(String table) {
-		      this.db.delete(TABLE_NAME, null, null);
+			   	this.db.delete(TABLE_NAME, null, null);
 		   }
 		   
 		   public boolean contains(String name) {
@@ -50,12 +62,8 @@ public class DatabaseBeer {
 		   }
 		   
 		   public Cursor select(String name) {
-			   
-			   		String search = "name = \"" + name + "\"";
-//Cursor cursor = this.db.query(TABLE_NAME, new String[] { "name", "password" }, "name = '"+ username +"' AND password= '"+ password+"'", null, null, null, "name desc");
-			      return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
-			      
-			    
+			   	String search = "name = \"" + name + "\"";
+			    return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
 		   }
 		  
 		   public List<String> selectAll(String sort) {
@@ -84,7 +92,8 @@ public class DatabaseBeer {
 
 		      @Override
 		      public void onCreate(SQLiteDatabase db) {
-		         db.execSQL("CREATE TABLE " + TABLE_NAME + "(name TEXT PRIMARY KEY, maker TEXT, maker_location TEXT,  type TEXT,  ABV TEXT, rating INTEGER)");
+		         db.execSQL("CREATE TABLE " + TABLE_NAME + "(name TEXT PRIMARY KEY, maker TEXT, maker_location TEXT, "
+		         		+ "type TEXT, ABV TEXT, lat REAL, lng REAL, rating INTEGER)");
 		      }
 		      @Override
 		      public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

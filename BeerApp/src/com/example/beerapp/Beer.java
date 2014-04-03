@@ -46,7 +46,7 @@ public class Beer extends Activity implements OnClickListener {
 		search = (EditText) findViewById(R.id.search_text);
 		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
 		btnAddBeer.setOnClickListener(this);
-
+		Log.i("01", "01");
 		this.dh = new DatabaseBeer(this);
 		
 		
@@ -60,13 +60,31 @@ public class Beer extends Activity implements OnClickListener {
 		        // defining Adapter for List content
 		       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 		            android.R.layout.simple_list_item_1);
-		       Log.i("2", "2");
-		       List<String> names = this.dh.selectAll(String.valueOf(spinner1.getSelectedItem()));
-		       Log.i("3", "3");
-		       while (names.size() > 0) {
-		    	   adapter.add(names.remove(0));
+		       Log.i("2", search.getText().toString());
+		       if (search.getText().toString().length() == 0) {
+		    	   Log.i("3i", spinner1.getSelectedItem().toString());
+		    	   List<String> names = this.dh.selectAll(String.valueOf(spinner1.getSelectedItem().toString()));
+		    	   while (names.size() > 0) {
+		    		   adapter.add(names.remove(0));
+		    	   }
 		       }
-		      
+		       else {
+		    	   Log.i("3e", search.getText().toString());
+		    	   List<String> names = new ArrayList<String>(); 
+		    	   Cursor cursor = this.dh.search(search.getText().toString());
+		    	   if (cursor.moveToFirst()) {
+		    	        do {
+		    	        	 names.add(cursor.getString(0));
+		    	         } while (cursor.moveToNext()); 
+		    	      }
+		    	      if (cursor != null && !cursor.isClosed()) {
+		    	         cursor.close();
+		    	      }
+		    	   while (names.size() > 0) {
+		    		   adapter.add(names.remove(0));
+		    	   }
+		       }
+		       Log.i("3post", spinner1.getSelectedItem().toString());
 		       
 		       list.setAdapter(adapter);
 		       
@@ -103,6 +121,9 @@ public class Beer extends Activity implements OnClickListener {
 		        	 
 		         } while (curse.moveToNext()); 
 		      }
+	       if (curse != null && !curse.isClosed()) {
+	    	   curse.close();
+  	      }
 	       Log.i("5", "5");
 	       new AlertDialog.Builder(Beer.this)
          .setTitle("Selection Information")
@@ -132,6 +153,9 @@ public class Beer extends Activity implements OnClickListener {
 	        	 //retur.concat(curse.getString(0) + "\n");
 	        	 
 	         } while (curse.moveToNext()); 
+	      }
+		if (curse != null && !curse.isClosed()) {
+	         curse.close();
 	      }
 		retur.concat("end");
 		return retur;

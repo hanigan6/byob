@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ArrayAdapter;
@@ -24,18 +26,23 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 
-public class Beer extends Activity implements OnClickListener {
+public class Beer extends Activity implements OnClickListener, OnItemSelectedListener {
 	private DatabaseBeer dh;
 	private EditText search;
 	private Spinner spinner1;
 	private String selection;
-	private String spinnerSelect;
+	private static String spinnerSelect;
+	private ListView list;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("0", "0");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_beer);
+		
+		
+		//ViewGroup vg = (ViewGroup) findViewById (R.layout.activity_beer);
+		//vg.invalidate();
 		
 		Intent intent = getIntent();
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -53,68 +60,79 @@ public class Beer extends Activity implements OnClickListener {
 		spinner1 = (Spinner) findViewById(R.id.sort_spinner);
 		//View spnSort = (Spinner) findViewById(R.id.sort_spinner);
 		//spnSort.setOnClickListener(this);
-		spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+		spinner1.setOnItemSelectedListener(this);
+		spinnerSelect = spinner1.getSelectedItem().toString();
+		
 		Log.i("1", "1");
-		ListView list = (ListView) findViewById(R.id.beer_list);
-		          
-		        // defining Adapter for List content
-		       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-		            android.R.layout.simple_list_item_1);
-		       Log.i("2", search.getText().toString());
-		       if (search.getText().toString().length() == 0) {
-		    	   Log.i("3i", spinner1.getSelectedItem().toString());
-		    	   List<String> names = this.dh.selectAll(String.valueOf(spinner1.getSelectedItem().toString()));
-		    	   while (names.size() > 0) {
-		    		   adapter.add(names.remove(0));
-		    	   }
-		       }
-		       else {
-		    	   Log.i("3e", search.getText().toString());
-		    	   List<String> names = new ArrayList<String>(); 
-		    	   Cursor cursor = this.dh.search(search.getText().toString());
-		    	   if (cursor.moveToFirst()) {
-		    	        do {
-		    	        	 names.add(cursor.getString(0));
-		    	         } while (cursor.moveToNext()); 
-		    	      }
-		    	      if (cursor != null && !cursor.isClosed()) {
-		    	         cursor.close();
-		    	      }
-		    	   while (names.size() > 0) {
-		    		   adapter.add(names.remove(0));
-		    	   }
-		       }
-		       Log.i("3post", spinner1.getSelectedItem().toString());
-		       
-		       list.setAdapter(adapter);
-		       
-		       list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                	
-                	
-                	
-                    TextView sel = (TextView) arg1;
-                    
-                    String selectedItem = sel.getText().toString();
-                    selection = selectedItem;
-                    showBeer();
-              
-                }
-     
-            }); 
-		      
+		
+		populate();
 		       
 	}
 	
+	private void populate () {
+		list = (ListView) findViewById(R.id.beer_list);
+        
+        // defining Adapter for List content
+       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_1);
+       Log.i("2", search.getText().toString());
+       if (search.getText().toString().length() == 0) {
+    	   Log.i("3i", spinner1.getSelectedItem().toString());
+    	   List<String> names = this.dh.selectAll(spinner1.getSelectedItem().toString());
+    	   while (names.size() > 0) {
+    		   adapter.add(names.remove(0));
+    	   }
+       }
+       else {
+    	   Log.i("3e", search.getText().toString());
+    	   List<String> names = new ArrayList<String>(); 
+    	   Cursor cursor = this.dh.search(search.getText().toString(), spinner1.getSelectedItem().toString());
+    	   if (cursor.moveToFirst()) {
+    	        do {
+    	        	 names.add(cursor.getString(0));
+    	         } while (cursor.moveToNext()); 
+    	      }
+    	      if (cursor != null && !cursor.isClosed()) {
+    	         cursor.close();
+    	      }
+    	   while (names.size() > 0) {
+    		   adapter.add(names.remove(0));
+    	   }
+       }
+       Log.i("3post", spinner1.getSelectedItem().toString());
+       
+       list.setAdapter(adapter);
+       
+       list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        	
+        	
+        	
+            TextView sel = (TextView) arg1;
+            
+            String selectedItem = sel.getText().toString();
+            selection = selectedItem;
+            showBeer();
+      
+        }
+
+    }); 
+	}
+	
+	protected void onResume() {
+		Log.i("oR", "0");
+		super.onResume();
+		//setContentView(R.layout.activity_beer);
+	}
+	
 	private void showBeer () {
-		 Log.i("4", "4");
+		Log.i("sB", "0");
 		 StringBuilder retur = new StringBuilder();
 	       Cursor curse = this.dh.select(selection);
 	       if (curse.moveToFirst()) {
 		        do {
 		        	for (int x = 0; x < curse.getColumnCount(); x ++) {
-		    			Log.i("cc", "retur");
 		    			retur.append(curse.getString(x) + "\n");
 		    		}
 		        	 //retur.concat(curse.getString(0) + "\n");
@@ -124,7 +142,6 @@ public class Beer extends Activity implements OnClickListener {
 	       if (curse != null && !curse.isClosed()) {
 	    	   curse.close();
   	      }
-	       Log.i("5", "5");
 	       new AlertDialog.Builder(Beer.this)
          .setTitle("Selection Information")
          .setMessage( retur)
@@ -136,7 +153,6 @@ public class Beer extends Activity implements OnClickListener {
 
                  }
              }).show();
-	       Log.i("6", "6");
 	}
 	
 	private String cursordisplay(Cursor curse) {
@@ -162,7 +178,7 @@ public class Beer extends Activity implements OnClickListener {
 	}
 	
 	private void doMySearch(String query) {
-		
+		Log.i("dMS", "0");
 
 	}
 
@@ -172,6 +188,8 @@ public class Beer extends Activity implements OnClickListener {
 		case R.id.add_beer_button:
 			startActivity(new Intent(this, AddBeer.class));
 			break;
+		//TODO done button pressed
+		
 
 		/*
 		case R.id.beer_list:
@@ -179,6 +197,24 @@ public class Beer extends Activity implements OnClickListener {
 			break;
 			*/
 		}
+	}
+	
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		//onResume();
+		//list.deferNotifyDataSetChanged();
+		Log.i("oIS", "0");
+		populate();
+		Log.i("oIS", "1");
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		// TODO Auto-generated method stub
+		Log.i("oNS", "0");
 	}
 
 }

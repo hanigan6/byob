@@ -29,9 +29,9 @@ public class DatabaseBeer {
 		      this.insertStmt = this.db.compileStatement(INSERT);
 		   }
 		   
-		   public Cursor search(String searchtext) {
+		   public Cursor search(String searchtext, String column) {
 			   //SELECT count(*) FROM enrondata2 WHERE content LIKE '%linux%'
-			   String search = "content LIKE '%" + searchtext + "%'";
+			   String search = column + " LIKE '%" + searchtext + "%'";
 			   return this.db.query(TABLE_NAME, new String[] {"name"},  search,  null, null, null,  "name desc");
 		   }
 		   
@@ -67,7 +67,7 @@ public class DatabaseBeer {
 		   }
 		  
 		   public List<String> selectAll(String sort) {
-			  String sortline = sort + " desc";
+			  String sortline = sort + " asc";
 		      List<String> list = new ArrayList<String>();
 		      Log.i("d0", "d0");
 		      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name"},  null,  null, null, null,  sortline, null);

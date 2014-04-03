@@ -133,14 +133,14 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	  public void onProviderEnabled(String provider) {
 	    Toast.makeText(this, "Enabled new provider " + provider,
 	        Toast.LENGTH_SHORT).show();
-	    	//locationInitialized = true;
+	    	locationInitialized = true;
 	  }
 
 	  @Override
 	  public void onProviderDisabled(String provider) {
 	    Toast.makeText(this, "Disabled provider " + provider,
 	        Toast.LENGTH_SHORT).show();
-	    	//locationInitialized = false;
+	    	locationInitialized = false;
 	  }
 	
 	@Override

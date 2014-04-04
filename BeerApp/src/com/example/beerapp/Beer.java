@@ -7,18 +7,14 @@ import java.util.List;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Spinner;
@@ -33,7 +29,6 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	private EditText search;
 	private Spinner spinner1;
 	private String selection;
-	private static String spinnerSelect;
 	private ListView list;
 	private ArrayAdapter<String> adapter;
 	
@@ -43,29 +38,18 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_beer);
 		
-		
-		//ViewGroup vg = (ViewGroup) findViewById (R.layout.activity_beer);
-		//vg.invalidate();
-		
-		Intent intent = getIntent();
-	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-	      String query = intent.getStringExtra(SearchManager.QUERY);
-	      doMySearch();
-	    }
-		
 		search = (EditText) findViewById(R.id.search_text);
 		search.setOnEditorActionListener(this);
 		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
 		btnAddBeer.setOnClickListener(this);
+		spinner1 = (Spinner) findViewById(R.id.sort_spinner);
+		spinner1.setOnItemSelectedListener(this);
+		
 		Log.i("01", "01");
 		this.dh = new DatabaseBeer(this);
 		
-		
 		spinner1 = (Spinner) findViewById(R.id.sort_spinner);
-		//View spnSort = (Spinner) findViewById(R.id.sort_spinner);
-		//spnSort.setOnClickListener(this);
 		spinner1.setOnItemSelectedListener(this);
-		spinnerSelect = spinner1.getSelectedItem().toString();
 		
 		Log.i("1", "1");
 		
@@ -165,7 +149,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
  		   adapter.add(names.remove(0));
  	   }
 
-	}
+	}  
 
 	@Override
 	public void onClick(View v) {
@@ -173,14 +157,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		case R.id.add_beer_button:
 			startActivity(new Intent(this, AddBeer.class));
 			break;
-		//TODO done button pressed
-		
 
-		/*
-		case R.id.beer_list:
-			startActivity(new Intent(this, ))
-			break;
-			*/
 		}
 	}
 	
@@ -201,16 +178,44 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		// TODO Auto-generated method stub
 		Log.i("oNS", "0");
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.i("oKD", "0");
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        	Log.i("oKD", "1");
+        	startActivity(new Intent(this, MainActivity.class));
+           return true;
+        }
+        return false;
+    }
 
 	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		Log.i("oEA", "0");
+		Log.i("oEA", String(actionId));
+		Log.i("oEA", event.toString());
+		populate();
 		//if (KeyEvent.KEYCODE_ENTER == actionId) {
 			//Log.i("oEA", "1");
-			populate();
+			
 		//}
 		// TODO Auto-generated method stub
+		/*	
+		 if (actionId == KeyEvent.KEYCODE_BACK) {
+			 Log.i("oEA", "1");
+			 startActivity(new Intent(this, MainActivity.class));
+		 }
+		 else {
+			 Log.i("oEA", "2");
+			 populate();
+		 }
+		 */
 		return false;
+	}
+
+	private String String(int actionId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,17 +23,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.AdapterView;
+import android.widget.TextView.OnEditorActionListener;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 
-public class Beer extends Activity implements OnClickListener, OnItemSelectedListener {
+public class Beer extends Activity implements OnClickListener, OnItemSelectedListener, OnEditorActionListener {
 	private DatabaseBeer dh;
 	private EditText search;
 	private Spinner spinner1;
 	private String selection;
 	private static String spinnerSelect;
 	private ListView list;
+	private ArrayAdapter<String> adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +50,11 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		Intent intent = getIntent();
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	      String query = intent.getStringExtra(SearchManager.QUERY);
-	      doMySearch(query);
+	      doMySearch();
 	    }
 		
 		search = (EditText) findViewById(R.id.search_text);
+		search.setOnEditorActionListener(this);
 		View btnAddBeer = (Button) findViewById(R.id.add_beer_button);
 		btnAddBeer.setOnClickListener(this);
 		Log.i("01", "01");
@@ -73,7 +77,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		list = (ListView) findViewById(R.id.beer_list);
         
         // defining Adapter for List content
-       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+       adapter = new ArrayAdapter<String>(this,
             android.R.layout.simple_list_item_1);
        Log.i("2", search.getText().toString());
        if (search.getText().toString().length() == 0) {
@@ -84,20 +88,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
     	   }
        }
        else {
-    	   Log.i("3e", search.getText().toString());
-    	   List<String> names = new ArrayList<String>(); 
-    	   Cursor cursor = this.dh.search(search.getText().toString(), spinner1.getSelectedItem().toString());
-    	   if (cursor.moveToFirst()) {
-    	        do {
-    	        	 names.add(cursor.getString(0));
-    	         } while (cursor.moveToNext()); 
-    	      }
-    	      if (cursor != null && !cursor.isClosed()) {
-    	         cursor.close();
-    	      }
-    	   while (names.size() > 0) {
-    		   adapter.add(names.remove(0));
-    	   }
+    	   doMySearch();
        }
        Log.i("3post", spinner1.getSelectedItem().toString());
        
@@ -155,30 +146,24 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
              }).show();
 	}
 	
-	private String cursordisplay(Cursor curse) {
-		String retur= "test";
-		System.out.println(curse.toString());
-		List<String> list = new ArrayList<String>();
-
-		if (curse.moveToFirst()) {
-	        do {
-	        	for (int x = 0; x < curse.getColumnCount(); x ++) {
-	    			Log.i("cc", "retur");
-	    			retur.concat(curse.getString(x) + "\n");
-	    		}
-	        	 //retur.concat(curse.getString(0) + "\n");
-	        	 
-	         } while (curse.moveToNext()); 
-	      }
-		if (curse != null && !curse.isClosed()) {
-	         curse.close();
-	      }
-		retur.concat("end");
-		return retur;
-	}
 	
-	private void doMySearch(String query) {
+	
+	private void doMySearch() {
 		Log.i("dMS", "0");
+		Log.i("3e", search.getText().toString());
+ 	   List<String> names = new ArrayList<String>(); 
+ 	   Cursor cursor = this.dh.search(search.getText().toString(), spinner1.getSelectedItem().toString());
+ 	   if (cursor.moveToFirst()) {
+ 	        do {
+ 	        	 names.add(cursor.getString(0));
+ 	         } while (cursor.moveToNext()); 
+ 	      }
+ 	      if (cursor != null && !cursor.isClosed()) {
+ 	         cursor.close();
+ 	      }
+ 	   while (names.size() > 0) {
+ 		   adapter.add(names.remove(0));
+ 	   }
 
 	}
 
@@ -215,6 +200,17 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	public void onNothingSelected(AdapterView<?> parent) {
 		// TODO Auto-generated method stub
 		Log.i("oNS", "0");
+	}
+
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		Log.i("oEA", "0");
+		//if (KeyEvent.KEYCODE_ENTER == actionId) {
+			//Log.i("oEA", "1");
+			populate();
+		//}
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

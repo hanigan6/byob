@@ -341,6 +341,9 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
         	startActivity(new Intent(this, MainActivity.class));
            return true;
         	}
+        	else {
+        		startActivity(new Intent(this, Beer.class));
+        	}
         }
         return false;
     }

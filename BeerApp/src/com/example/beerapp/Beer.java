@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.AdapterView;
@@ -31,6 +32,15 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	private String selection;
 	private ListView list;
 	private ArrayAdapter<String> adapter;
+	
+	private EditText editname;
+	private EditText editmaker;
+	private EditText editmaker_location;
+	private EditText editABV;
+	private EditText edittype;
+	private RatingBar editratingBar;
+	
+	private double lat = 0, lng = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,9 +137,88 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
                          int whichButton) {
 
                  }
-             }).show();
+             })
+             .setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+                 public void onClick(
+                         DialogInterface dialog,
+                         int whichButton) {
+                	 new AlertDialog.Builder(Beer.this)
+                     .setTitle("Confirm Delete " + selection)
+                     .setPositiveButton("NO",
+                         new DialogInterface.OnClickListener() {
+                             public void onClick(
+                                     DialogInterface dialog,
+                                     int whichButton) {
+
+                             }
+                         })
+                         .setNegativeButton("YES",
+                         new DialogInterface.OnClickListener() {
+                             public void onClick(
+                                     DialogInterface dialog,
+                                     int whichButton) {
+                            	 dh.remove(selection);
+                            	 populate();
+                             }
+                         })
+                         .show();
+                	 	//dh.remove(selection);
+                 }
+             })
+             .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                 public void onClick(
+                         DialogInterface dialog,
+                         int whichButton) {
+                	 	editBeer();
+                	 	//populate();
+                 }
+             })
+             .show();
 	}
-	
+
+	private void editBeer() {
+		setContentView(R.layout.activity_beverage_add);
+		View btnAddBeer = (Button) findViewById(R.id.add_beverage_button);	
+		btnAddBeer.setOnClickListener(this);
+		
+		Log.i("editBeer", selection);
+		Cursor curse = this.dh.select(selection);
+		Log.i("eb", curse.getColumnCount() + " " + curse.getCount());
+		
+		if (curse.moveToFirst()) {		
+			editname = (EditText) findViewById(R.id.name_text);
+			//Log.i("xx", curse.getString(0));
+			editname.setText(curse.getString(0), TextView.BufferType.EDITABLE);
+			
+			editmaker = (EditText) findViewById(R.id.maker_text);
+			editmaker.setText(curse.getString(1), TextView.BufferType.EDITABLE);
+			
+			editmaker_location = (EditText) findViewById(R.id.maker_location_text);
+			editmaker_location.setText(curse.getString(2), TextView.BufferType.EDITABLE);
+			
+			editABV = (EditText) findViewById(R.id.ABV_text);
+			editABV.setText(curse.getString(3), TextView.BufferType.EDITABLE);
+			
+			edittype = (EditText) findViewById(R.id.type_text);
+			edittype.setText(curse.getString(4), TextView.BufferType.EDITABLE);
+			
+			lat = curse.getDouble(5);
+			lng = curse.getDouble(6);
+			
+			editratingBar = (RatingBar) findViewById(R.id.ratingBar);
+			editratingBar.setRating(curse.getInt(7));
+		}
+		if (curse != null && !curse.isClosed()) {
+	    	   curse.close();
+		}
+		
+		this.dh.remove(selection);
+		
+		
+		
+		
+		
+	}
 	
 	
 	private void doMySearch() {
@@ -157,8 +246,46 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		case R.id.add_beer_button:
 			startActivity(new Intent(this, AddBeer.class));
 			break;
+		case R.id.add_beverage_button:
+			String nametext = this.editname.getText().toString();
+			if (nametext.equals("")) {
+				new AlertDialog.Builder(Beer.this)
+	            .setTitle("Name cannot be empty")
+	            .setNeutralButton("OK",
+	                new DialogInterface.OnClickListener() {
+	                    public void onClick(
+	                            DialogInterface dialog,
+	                            int whichButton) {
 
+	                    }
+	                }).show();
+			}
+			else if (this.dh.contains(nametext)) {
+				new AlertDialog.Builder(Beer.this)
+	            .setTitle("Beer already exists")
+	            .setNeutralButton("OK",
+	                new DialogInterface.OnClickListener() {
+	                    public void onClick(
+	                            DialogInterface dialog,
+	                            int whichButton) {
+
+	                    }
+	                }).show();
+			}
+			else {
+				String makertext = this.editmaker.getText().toString();
+				String makerloctext = this.editmaker_location.getText().toString();
+				String ABVtext = this.editABV.getText().toString();
+				String typetext = this.edittype.getText().toString();
+				String ratingtext = String.valueOf(editratingBar.getRating());
+				
+				this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, lat, lng, ratingtext);
+			}
+			startActivity(new Intent(this, Beer.class));
+			break;
 		}
+		
+			
 	}
 	
 

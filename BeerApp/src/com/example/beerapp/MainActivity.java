@@ -37,33 +37,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onPause();
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.i("oKD", "0");
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-        	new AlertDialog.Builder(MainActivity.this)
-            .setTitle("Exit App?")
-            .setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(
-                            DialogInterface dialog,
-                            int whichButton) {
-                    	finish();
-                    }
-                })
-                .setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(
-                            DialogInterface dialog,
-                            int whichButton) {
-                    	
-                    }
-                })
-                .show();
-           return true;
-        }
-        return false;
-    }
+	
 	
 	@Override
 	public void onClick(View v) {

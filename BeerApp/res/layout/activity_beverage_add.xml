@@ -63,15 +63,15 @@
 	            android:inputType="text"
 	            android:singleLine="true" />
 	        
-	        <TextView
+	         <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="10dip"
 	            android:layout_gravity="left"
-	            android:text="@string/abv"
+	            android:text="@string/location_name"
 	            android:textSize="15.5sp" />
 	        <EditText
-	            android:id="@+id/ABV_text"
+	            android:id="@+id/location_name_text"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="10dip"
@@ -87,6 +87,21 @@
 	            android:textSize="15.5sp" />
 	        <EditText
 	            android:id="@+id/type_text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:inputType="text"
+	            android:singleLine="true" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dip"
+	            android:layout_gravity="left"
+	            android:text="@string/abv"
+	            android:textSize="15.5sp" />
+	        <EditText
+	            android:id="@+id/ABV_text"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="10dip"

@@ -43,6 +43,7 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	private EditText name;
 	private EditText maker;
 	private EditText maker_location;
+	private EditText location_name;
 	private EditText ABV;
 	private EditText type;
 	private Spinner spinner1;
@@ -81,8 +82,9 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 		name = (EditText) findViewById(R.id.name_text);
 		maker = (EditText) findViewById(R.id.maker_text);
 		maker_location = (EditText) findViewById(R.id.maker_location_text);
-		ABV = (EditText) findViewById(R.id.ABV_text);
+		location_name = (EditText) findViewById(R.id.location_name_text);
 		type = (EditText) findViewById(R.id.type_text);
+		ABV = (EditText) findViewById(R.id.ABV_text);
 		
 		//View ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		//ratingBar.setOnClickListener(this);
@@ -180,14 +182,17 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 			else {
 				String makertext = this.maker.getText().toString();
 				String makerloctext = this.maker_location.getText().toString();
-				String ABVtext = this.ABV.getText().toString();
+				String locanametext = this.location_name.getText().toString();
 				String typetext = this.type.getText().toString();
+				String ABVtext = this.ABV.getText().toString();
 				String ratingtext = String.valueOf(ratingBar.getRating());
-				
+				//TODO loc name for db
 				if (! locationInitialized) {
+					Log.i(typetext, ABVtext);
 					this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, (double)0, (double)0, ratingtext);
 				}
 				else {
+					Log.i(typetext, ABVtext);
 					this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, location.getLatitude(), location.getLongitude(), ratingtext);
 				}
 				startActivity(new Intent("com.example.beerapp.Beer"));

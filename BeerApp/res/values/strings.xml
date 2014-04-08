@@ -60,5 +60,6 @@
         <string name="add_beverage">add beverage</string>
         <string name="reset_databases">reset databases</string>
         <string name="set">set</string>
+        <string name="location_name">location_name</string>
 
 </resources>

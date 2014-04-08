@@ -67,7 +67,13 @@ public class DatabaseBeer {
 		   }
 		  
 		   public List<String> selectAll(String sort) {
-			  String sortline = sort + " asc";
+			   String sortline;
+			   if (sort.equalsIgnoreCase("rating")) {
+				   sortline = sort + " desc";
+			   }
+			   else {
+				   sortline = sort + " asc";
+			   }
 		      List<String> list = new ArrayList<String>();
 		      Log.i("d0", "d0");
 		      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name"},  null,  null, null, null,  sortline, null);

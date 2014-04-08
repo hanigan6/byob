@@ -1,9 +1,13 @@
 package com.example.beerapp;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.app.Activity;
@@ -32,6 +36,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	private String selection;
 	private ListView list;
 	private ArrayAdapter<String> adapter;
+	private boolean inEdit = false;
 	
 	private EditText editname;
 	private EditText editmaker;
@@ -98,7 +103,12 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
             
             String selectedItem = sel.getText().toString();
             selection = selectedItem;
-            showBeer();
+            try {
+				showBeer();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
       
         }
 
@@ -111,16 +121,29 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		//setContentView(R.layout.activity_beer);
 	}
 	
-	private void showBeer () {
+	private void showBeer () throws IOException {
 		Log.i("sB", "0");
 		 StringBuilder retur = new StringBuilder();
+		 Geocoder geocoder;
+		 List<Address> addresses;
+		 geocoder = new Geocoder(this, Locale.getDefault());
+		 
 	       Cursor curse = this.dh.select(selection);
 	       if (curse.moveToFirst()) {
 		        do {
-		        	for (int x = 0; x < curse.getColumnCount(); x ++) {
-		    			retur.append(curse.getString(x) + "\n");
-		    		}
-		        	 //retur.concat(curse.getString(0) + "\n");
+		        	addresses = geocoder.getFromLocation(curse.getDouble(5), curse.getDouble(6), 1);
+		    			retur.append("name:            " + curse.getString(0) + "\n");
+		    			retur.append("maker:           " + curse.getString(1) + "\n");
+		    			retur.append("maker location:  " + curse.getString(2) + "\n");
+		    			retur.append("type:             " + curse.getString(3) + "\n");
+		    			retur.append("ABV:            " + curse.getString(4) + "\n");
+		    			if (addresses.size() > 0) {
+		    				retur.append("location bought: " + addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getAddressLine(1) + "\n");
+		    			}
+
+		    			
+		    			retur.append("rating:          " + curse.getString(7) + "\n");
+		    	
 		        	 
 		         } while (curse.moveToNext()); 
 		      }
@@ -178,6 +201,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 
 	private void editBeer() {
 		setContentView(R.layout.activity_beverage_add);
+		inEdit = true;
 		View btnAddBeer = (Button) findViewById(R.id.add_beverage_button);	
 		btnAddBeer.setOnClickListener(this);
 		
@@ -195,12 +219,12 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 			
 			editmaker_location = (EditText) findViewById(R.id.maker_location_text);
 			editmaker_location.setText(curse.getString(2), TextView.BufferType.EDITABLE);
+
+			edittype = (EditText) findViewById(R.id.type_text);
+			edittype.setText(curse.getString(3), TextView.BufferType.EDITABLE);
 			
 			editABV = (EditText) findViewById(R.id.ABV_text);
-			editABV.setText(curse.getString(3), TextView.BufferType.EDITABLE);
-			
-			edittype = (EditText) findViewById(R.id.type_text);
-			edittype.setText(curse.getString(4), TextView.BufferType.EDITABLE);
+			editABV.setText(curse.getString(4), TextView.BufferType.EDITABLE);
 			
 			lat = curse.getDouble(5);
 			lng = curse.getDouble(6);
@@ -212,7 +236,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	    	   curse.close();
 		}
 		
-		this.dh.remove(selection);
+		
 		
 		
 		
@@ -237,6 +261,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
  	   while (names.size() > 0) {
  		   adapter.add(names.remove(0));
  	   }
+ 	  Log.i("dMS", "1");
 
 	}  
 
@@ -247,6 +272,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 			startActivity(new Intent(this, AddBeer.class));
 			break;
 		case R.id.add_beverage_button:
+			this.dh.remove(selection);
 			String nametext = this.editname.getText().toString();
 			if (nametext.equals("")) {
 				new AlertDialog.Builder(Beer.this)
@@ -275,8 +301,8 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 			else {
 				String makertext = this.editmaker.getText().toString();
 				String makerloctext = this.editmaker_location.getText().toString();
-				String ABVtext = this.editABV.getText().toString();
 				String typetext = this.edittype.getText().toString();
+				String ABVtext = this.editABV.getText().toString();
 				String ratingtext = String.valueOf(editratingBar.getRating());
 				
 				this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, lat, lng, ratingtext);
@@ -310,17 +336,19 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		Log.i("oKD", "0");
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+        	if (!inEdit ){
         	Log.i("oKD", "1");
         	startActivity(new Intent(this, MainActivity.class));
            return true;
+        	}
         }
         return false;
     }
 
 	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		Log.i("oEA", String(actionId));
-		Log.i("oEA", event.toString());
+		//Log.i("oEA", String(actionId));
+		//Log.i("oEA", event.toString());
 		populate();
 		//if (KeyEvent.KEYCODE_ENTER == actionId) {
 			//Log.i("oEA", "1");

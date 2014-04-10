@@ -30,15 +30,6 @@
 	            android:layout_marginTop="60dip"
 	            android:inputType="text"
 	            android:singleLine="true" />
-
-	        <Spinner
-	            android:id="@+id/sort_spinner"
-	            android:layout_width="154dp"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="110dip"
-	            android:layout_marginLeft="145dip"
-	            android:entries="@array/sort_options"
-	            android:prompt="@string/sort_prompt" />
 	        
 	        <Button
 	            android:id="@+id/add_beer_button"
@@ -56,7 +47,14 @@
 			    android:layout_alignParentTop="true" >
 			</ListView>
 
-
+			<Spinner
+			    android:id="@+id/sort_spinner"
+			    android:layout_width="154dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentRight="true"
+			    android:layout_alignTop="@+id/add_beer_button"
+			    android:entries="@array/sort_options"
+			    android:prompt="@string/sort_prompt" />
 	        
 	</RelativeLayout>
 

@@ -46,7 +46,7 @@ public class Location extends Activity implements OnClickListener {
             googleMap.getUiSettings().setMyLocationButtonEnabled(true);
             googleMap.setMyLocationEnabled(true);
             
-            //Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG).title("Hamburg"));
+            
             Log.i("map", "im1");
             this.dh = new DatabaseBeer(this);
             Cursor cursor = this.dh.MapData();

@@ -61,5 +61,9 @@
         <string name="reset_databases">reset databases</string>
         <string name="set">set</string>
         <string name="location_name">location_name</string>
+        <string name="reset_all_databases">reset all databases</string>
+        <string name="reset_liquor_database">reset liquor database</string>
+        <string name="reset_wine_database">reset wine database</string>
+        <string name="reset_beer_database">reset beer database</string>
 
 </resources>

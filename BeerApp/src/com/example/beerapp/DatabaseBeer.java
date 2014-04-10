@@ -94,15 +94,18 @@ public class DatabaseBeer {
 		   }
 		   
 		   public Cursor selectAll(String sort, String second) {
-				  String sortline = sort + " asc";
-			     
-			      Log.i("d0", "d0");
-			      Cursor cursor = this.db.query(TABLE_NAME, new String[] {sort, second},  null,  null, null, null,  sortline, null);
-			      Log.i("d1", "d1");
-			      
-			   
-			      return cursor;
+			   String sortline;
+			   if (sort.equalsIgnoreCase("rating")) {
+				   sortline = sort + " desc";
 			   }
+			   else {
+				   sortline = sort + " asc";
+			   }
+		     
+		      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name", sort},  null,  null, null, null,  sortline, null);
+		   
+		      return cursor;
+		   }
 		   
 		   private static class BeerDatabase extends SQLiteOpenHelper {
 			   BeerDatabase(Context context) {

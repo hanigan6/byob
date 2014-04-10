@@ -48,24 +48,13 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	    provider = locationManager.getBestProvider(criteria, false);
 	    location = locationManager.getLastKnownLocation(provider);
 	    
-		//Log.i("addb", location.toString());
-		
-		/*mLocationClient = new LocationClient(this, this, this);
-		Log.i("addb", "1");
-		mLocationClient.connect();
-		Log.i("addb", "2");
-	   
-	    Log.i("addb", "3");
-		*/
 		name = (EditText) findViewById(R.id.name_text);
 		maker = (EditText) findViewById(R.id.maker_text);
 		maker_location = (EditText) findViewById(R.id.maker_location_text);
 		location_name = (EditText) findViewById(R.id.location_name_text);
 		type = (EditText) findViewById(R.id.type_text);
 		ABV = (EditText) findViewById(R.id.ABV_text);
-		
-		//View ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-		//ratingBar.setOnClickListener(this);
+
 		ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		
 		View btnAddBeer = (Button) findViewById(R.id.add_beverage_button);	

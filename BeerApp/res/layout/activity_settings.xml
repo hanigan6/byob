@@ -5,24 +5,31 @@
     android:orientation="vertical" >
     
     <Button
-            android:id="@+id/edit_account_button"
+            android:id="@+id/reset_beer_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="90dip"
-            android:text="@string/edit_account" />
+            android:text="@string/reset_beer_database" />
     
     <Button
-            android:id="@+id/logout_button"
+            android:id="@+id/reset_wine_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:text="@string/logout" />
+            android:text="@string/reset_wine_database" />
+    
+    <Button
+            android:id="@+id/reset_liquor_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:text="@string/reset_liquor_database" />
     
     <Button
             android:id="@+id/drop_tables_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:text="@string/reset_databases" />
+            android:text="@string/reset_all_databases" />
 
 </LinearLayout>

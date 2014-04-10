@@ -73,8 +73,69 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 	}
 	
 	private void populate () {
+		Cursor cursor;
 		list = (ListView) findViewById(R.id.beer_list);
-        
+		List<String> names = new ArrayList<String>();
+        // defining Adapter for List content
+       adapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_1);
+       Log.i("2", search.getText().toString());
+       if (search.getText().toString().length() == 0) {
+    	   Log.i("3i", spinner1.getSelectedItem().toString());
+    	   if (spinner1.getSelectedItem().toString().equalsIgnoreCase("name")) {
+    		   cursor = this.dh.selectAll(spinner1.getSelectedItem().toString(), "rating");
+    	   }
+    	   else {
+    		   cursor = this.dh.selectAll(spinner1.getSelectedItem().toString(), "name");
+    	   }
+    	   if (cursor.moveToFirst()) {
+		        do {
+		        	
+		        	if (spinner1.getSelectedItem().toString().equalsIgnoreCase("name")) {
+		        		names.add(cursor.getString(0));
+		        	}
+		        	else {
+		        		names.add(cursor.getString(0) + "   --   "  + cursor.getString(1));
+		        	}
+		        	 
+		         } while (cursor.moveToNext()); 
+		      }
+	       if (cursor != null && !cursor.isClosed()) {
+	    	   cursor.close();
+ 	      }
+    	   while (names.size() > 0) {
+    		   adapter.add(names.remove(0));
+    	   }
+       }
+       else {
+    	   doMySearch();
+       }       
+       list.setAdapter(adapter);
+       
+       list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            TextView sel = (TextView) arg1;
+            StringBuilder selectedItem = new StringBuilder(sel.getText().toString());
+            int loc = selectedItem.indexOf("   --   ", 0);
+            if (spinner1.getSelectedItem().toString().equalsIgnoreCase("name")) {
+            	selection = selectedItem.toString();
+            }
+            else {
+            	selection = selectedItem.substring(0, loc);
+            }
+            try {
+				showBeer();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+      
+        }
+
+    }); 
+		/*
+		list = (ListView) findViewById(R.id.beer_list);
         // defining Adapter for List content
        adapter = new ArrayAdapter<String>(this,
             android.R.layout.simple_list_item_1);
@@ -88,19 +149,13 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
        }
        else {
     	   doMySearch();
-       }
-       Log.i("3post", spinner1.getSelectedItem().toString());
-       
+       }       
        list.setAdapter(adapter);
        
        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        	
-        	
-        	
             TextView sel = (TextView) arg1;
-            
             String selectedItem = sel.getText().toString();
             selection = selectedItem;
             try {
@@ -113,6 +168,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
         }
 
     }); 
+       */
 	}
 	
 	protected void onResume() {
@@ -211,7 +267,6 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		
 		if (curse.moveToFirst()) {		
 			editname = (EditText) findViewById(R.id.name_text);
-			//Log.i("xx", curse.getString(0));
 			editname.setText(curse.getString(0), TextView.BufferType.EDITABLE);
 			
 			editmaker = (EditText) findViewById(R.id.maker_text);
@@ -235,12 +290,7 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		if (curse != null && !curse.isClosed()) {
 	    	   curse.close();
 		}
-		
-		
-		
-		
-		
-		
+			
 		
 	}
 	

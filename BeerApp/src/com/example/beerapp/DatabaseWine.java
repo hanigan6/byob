@@ -7,6 +7,7 @@ import java.util.List;
 
 
 
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -105,14 +106,11 @@ public class DatabaseWine {
 			   else {
 				   sortline = sort + " asc";
 			   }
-			     
-			      Log.i("d0", "d0");
-			      Cursor cursor = this.db.query(TABLE_NAME, new String[] {sort, second},  null,  null, null, null,  sortline, null);
-			      Log.i("d1", "d1");
-			      
-			   
-			      return cursor;
-			   }
+		     
+		      Cursor cursor = this.db.query(TABLE_NAME, new String[] {"name", sort},  null,  null, null, null,  sortline, null);
+		   
+		      return cursor;
+		   }
 		   
 		   private static class WineDatabase extends SQLiteOpenHelper {
 			   WineDatabase(Context context) {

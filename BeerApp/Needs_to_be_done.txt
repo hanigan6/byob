@@ -4,10 +4,7 @@ NFR address - UI changes etc.
 Unit Testing
 
 High Priority Items to add:
-Add a remove function to remove certain items from the users database
-Add Edit Function
-Search Function
-Sort based on different things - Rating, Name, Type.
+
 Map GPS
 
 Low Priority:

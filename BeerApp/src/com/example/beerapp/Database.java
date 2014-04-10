@@ -1,17 +1,9 @@
 package com.example.beerapp;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,27 +11,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class Database {
 	private static final String DATABASE_NAME = "BeerApp.db";
 	   private static final int DATABASE_VERSION = 1;
 	   private static final String TABLE_NAME1 = "Accounts";
-	   private static final String TABLE_NAME2 = "Beer";
-	   private static final String TABLE_NAME3 = "Wine";
-	   private static final String TABLE_NAME4 = "Liquor";
+
 	   private Context context;
 	   private SQLiteDatabase db;
 	   private SQLiteStatement insertStmt;
 	   private static final String INSERT = "insert into " + TABLE_NAME1 + "(name, password) values (?, ?)" ;
 	   
 	   public Database(Context context) {
-	      this.context = context;
-	      
-	      
-	      this.insertStmt = this.db.compileStatement(INSERT);
+		   this.context = context;
+		   ACCTDatabase openHelper = new ACCTDatabase(this.context);
+		   this.db = openHelper.getWritableDatabase();
+		   this.insertStmt = this.db.compileStatement(INSERT);
 	   }
 
 	   public long insertAccount(String name, String password) {

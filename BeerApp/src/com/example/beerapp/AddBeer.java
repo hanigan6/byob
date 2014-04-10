@@ -1,42 +1,23 @@
 package com.example.beerapp;
 
 
-
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
-
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-
-import android.widget.ArrayAdapter;
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Spinner;
-import android.widget.AdapterView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
-
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 
 public class AddBeer extends Activity implements OnClickListener, LocationListener {
 	private DatabaseBeer dh;
@@ -46,14 +27,11 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	private EditText location_name;
 	private EditText ABV;
 	private EditText type;
-	private Spinner spinner1;
-	  private RatingBar ratingBar;
-	 private android.location.Location mCurrentLocation;
-	 private LocationManager locationManager;
-	 private LocationClient mLocationClient;
-	 private String provider;
-	 private Location location;
-	 private boolean locationInitialized = true;
+	private RatingBar ratingBar;
+	private LocationManager locationManager;
+	private String provider;
+	private Location location;
+	private boolean locationInitialized = true;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

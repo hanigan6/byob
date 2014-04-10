@@ -371,9 +371,5 @@ public class Beer extends Activity implements OnClickListener, OnItemSelectedLis
 		return false;
 	}
 
-	private String String(int actionId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

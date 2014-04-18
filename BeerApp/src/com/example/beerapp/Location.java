@@ -40,30 +40,28 @@ public class Location extends Activity implements OnClickListener {
     private void initilizeMap() {
     	
         if (googleMap == null) {
-        	Log.i("map", "im0");
+        	
             googleMap = ((MapFragment) getFragmentManager().findFragmentById(
                     R.id.map)).getMap();
+            //button to zoom in on user
             googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+            //shows user location
             googleMap.setMyLocationEnabled(true);
             
-            
-            Log.i("map", "im1");
             this.dh = new DatabaseBeer(this);
+            //markers to each location attached to all beverages
             Cursor cursor = this.dh.MapData();
             Marker[] markers = new Marker[cursor.getCount()];
             int count = 0;
             Log.i("map", "im2");
             if (cursor.moveToFirst()) {
     	        do {
-    	        	 //names.add(cursor.getString(0));
-    	        	//LocationClient mLocationClient = new LocationClient();
-    	    	     // = mLocationClient.getLastLocation();
-    	        	Log.i("map", "im3");
     	        	LatLng coord = new LatLng(cursor.getDouble(1), cursor.getDouble(2));
+    	        	//if no location lat and long will both equal 0
     	        	if (coord.latitude != (double)0 & coord.longitude != (double)0) {
     	        		markers[count] = googleMap.addMarker(new MarkerOptions().position(coord).title(cursor.getString(0)) );
     	        	}
-    	        	Log.i("map", "im4");
+    	
     	         } while (cursor.moveToNext()); 
     	      }
     	      if (cursor != null && !cursor.isClosed()) {
@@ -78,13 +76,7 @@ public class Location extends Activity implements OnClickListener {
                         .show();
             }
         }
-        Log.i("map", "im5");
-    }
- 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initilizeMap();
+        
     }
 
 	@Override

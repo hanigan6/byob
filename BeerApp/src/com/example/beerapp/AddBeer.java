@@ -24,7 +24,6 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	private EditText name;
 	private EditText maker;
 	private EditText maker_location;
-	private EditText location_name;
 	private EditText ABV;
 	private EditText type;
 	private RatingBar ratingBar;
@@ -39,7 +38,6 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 		setContentView(R.layout.activity_beverage_add);
 		
 
-		Log.i("addb", "0");
 		// Get the location manager
 	    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    // Define the criteria how to select the locatioin provider -> use
@@ -51,7 +49,6 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 		name = (EditText) findViewById(R.id.name_text);
 		maker = (EditText) findViewById(R.id.maker_text);
 		maker_location = (EditText) findViewById(R.id.maker_location_text);
-		location_name = (EditText) findViewById(R.id.location_name_text);
 		type = (EditText) findViewById(R.id.type_text);
 		ABV = (EditText) findViewById(R.id.ABV_text);
 
@@ -64,9 +61,7 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	    if (location != null) {
 	      System.out.println("Provider " + provider + " has been selected.");
 	      onLocationChanged(location);
-	    } else {
-	      
-	    }
+	    } 
 		
 	}
 
@@ -86,10 +81,7 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 
 	  @Override
 	  public void onLocationChanged(Location location) {
-	    //int lat = (int) (location.getLatitude());
-	    //int lng = (int) (location.getLongitude());
-	    //latituteField.setText(String.valueOf(lat));
-	    //longitudeField.setText(String.valueOf(lng));
+		  locationManager.requestLocationUpdates(provider, 400, 1, this);
 	  }
 
 	  @Override
@@ -100,13 +92,15 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 
 	  @Override
 	  public void onProviderEnabled(String provider) {
-	    Toast.makeText(this, "Enabled new provider " + provider,
+		  //if gps enabled
+		  Toast.makeText(this, "Enabled new provider " + provider,
 	        Toast.LENGTH_SHORT).show();
 	    	locationInitialized = true;
 	  }
 
 	  @Override
 	  public void onProviderDisabled(String provider) {
+		//if gps disabled
 	    Toast.makeText(this, "Disabled provider " + provider,
 	        Toast.LENGTH_SHORT).show();
 	    	locationInitialized = false;
@@ -115,13 +109,12 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	@Override
 	public void onClick(View v) {
 		this.dh = new DatabaseBeer(this);
-		Log.i("xx", "yy");
 		this.dh.contains(this.name.getText().toString());
-		Log.i("xx", "yy");
 		switch (v.getId()) {
-		
+		//when add beverage pushed add beverage to database
 		case R.id.add_beverage_button:
 			String nametext = this.name.getText().toString();
+			//error message if no name
 			if (nametext.equals("")) {
 				new AlertDialog.Builder(AddBeer.this)
 	            .setTitle("Name cannot be empty")
@@ -134,6 +127,7 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	                    }
 	                }).show();
 			}
+			//error message if beverage already exists
 			else if (this.dh.contains(nametext)) {
 				new AlertDialog.Builder(AddBeer.this)
 	            .setTitle("Beer already exists")
@@ -146,19 +140,20 @@ public class AddBeer extends Activity implements OnClickListener, LocationListen
 	                    }
 	                }).show();
 			}
+			//no problems
 			else {
 				String makertext = this.maker.getText().toString();
 				String makerloctext = this.maker_location.getText().toString();
-				String locanametext = this.location_name.getText().toString();
 				String typetext = this.type.getText().toString();
 				String ABVtext = this.ABV.getText().toString();
 				String ratingtext = String.valueOf(ratingBar.getRating());
-				//TODO loc name for db
 				if (! locationInitialized) {
+					//if no location enter 0, 0
 					Log.i(typetext, ABVtext);
 					this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, (double)0, (double)0, ratingtext);
 				}
 				else {
+					//if location avaiable add it			
 					Log.i(typetext, ABVtext);
 					this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, location.getLatitude(), location.getLongitude(), ratingtext);
 				}

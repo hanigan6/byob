@@ -8,9 +8,12 @@ import java.util.Locale;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -177,13 +180,24 @@ public class Wine extends Activity implements OnClickListener, OnItemSelectedLis
 		//setContentView(R.layout.activity_beer);
 	}
 	
+	private boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+	
 	private void showWine () throws IOException {
+		if (isOnline()) {
 		Log.i("sB", "0");
 		 StringBuilder retur = new StringBuilder();
 		 Geocoder geocoder;
 		 List<Address> addresses;
 		 geocoder = new Geocoder(this, Locale.getDefault());
-		 
+
 	       Cursor curse = this.dh.select(selection);
 	       if (curse.moveToFirst()) {
 		        do {
@@ -253,6 +267,76 @@ public class Wine extends Activity implements OnClickListener, OnItemSelectedLis
                  }
              })
              .show();
+		}
+		else {
+			StringBuilder retur = new StringBuilder();
+			Cursor curse = this.dh.select(selection);
+		       if (curse.moveToFirst()) {
+			        do {
+			        	
+			    			retur.append("name:            " + curse.getString(0) + "\n");
+			    			retur.append("maker:           " + curse.getString(1) + "\n");
+			    			retur.append("maker location:  " + curse.getString(2) + "\n");
+			    			retur.append("type:             " + curse.getString(3) + "\n");
+			    			retur.append("ABV:            " + curse.getString(4) + "\n");
+			    			retur.append("location bought: unavailable \n");
+			    			
+			    			retur.append("rating:          " + curse.getString(7) + "\n");
+			    	
+			        	 
+			         } while (curse.moveToNext()); 
+			      }
+		       if (curse != null && !curse.isClosed()) {
+		    	   curse.close();
+	  	      }
+		       new AlertDialog.Builder(Wine.this)
+	         .setTitle("Selection Information")
+	         .setMessage( retur)
+	         .setNeutralButton("OK",
+	             new DialogInterface.OnClickListener() {
+	                 public void onClick(
+	                         DialogInterface dialog,
+	                         int whichButton) {
+
+	                 }
+	             })
+	             .setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+	                 public void onClick(
+	                         DialogInterface dialog,
+	                         int whichButton) {
+	                	 new AlertDialog.Builder(Wine.this)
+	                     .setTitle("Confirm Delete " + selection)
+	                     .setPositiveButton("NO",
+	                         new DialogInterface.OnClickListener() {
+	                             public void onClick(
+	                                     DialogInterface dialog,
+	                                     int whichButton) {
+
+	                             }
+	                         })
+	                         .setNegativeButton("YES",
+	                         new DialogInterface.OnClickListener() {
+	                             public void onClick(
+	                                     DialogInterface dialog,
+	                                     int whichButton) {
+	                            	 dh.remove(selection);
+	                            	 populate();
+	                             }
+	                         })
+	                         .show();
+	                	 	//dh.remove(selection);
+	                 }
+	             })
+	             .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+	                 public void onClick(
+	                         DialogInterface dialog,
+	                         int whichButton) {
+	                	 	editWine();
+	                	 	//populate();
+	                 }
+	             })
+	             .show();
+		}
 	}
 
 	private void editWine() {

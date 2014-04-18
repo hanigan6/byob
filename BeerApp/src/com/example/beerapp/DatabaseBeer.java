@@ -26,16 +26,19 @@ public class DatabaseBeer {
 		      this.insertStmt = this.db.compileStatement(INSERT);
 		   }
 		   
+		   //returns a cursor with elements matching seach criteria
 		   public Cursor search(String searchtext, String column) {
 			   //SELECT count(*) FROM enrondata2 WHERE content LIKE '%linux%'
 			   String search = column + " LIKE '%" + searchtext + "%'";
 			   return this.db.query(TABLE_NAME, new String[] {"name"},  search,  null, null, null,  "name desc");
 		   }
 		   
+		   //returns lat and long info. used in map page
 		   public Cursor MapData() {
 			   return this.db.query(TABLE_NAME, new String[] {"name", "lat", "lng"},  null,  null, null, null,  "name desc");
 		   }
 
+		   //adds beer into database
 		   public long insert(String name, String maker, String maker_location, String type, String ABV, Double lat, Double lng, String rating) {
 		      this.insertStmt.bindString(1, name);
 		      this.insertStmt.bindString(2, maker);
@@ -48,21 +51,25 @@ public class DatabaseBeer {
 		      return this.insertStmt.executeInsert();
 		   }
 		   
+		   //when delete beer selected from settings
 		   public void deleteAll(String table) {
 			   	this.db.delete(TABLE_NAME, null, null);
 		   }
 		   
+		   //checks if a beer is in database to prevent duplicates being added
 		   public boolean contains(String name) {
 			   	String search = "name = \"" + name + "\"";
 			    Cursor cursor = this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
 			    return (cursor.getCount() == 1);
 		   }
 		   
+		   //grabs all fields for a specific beer
 		   public Cursor select(String name) {
 			   	String search = "name = \"" + name + "\"";
 			    return this.db.query(TABLE_NAME, null,  search,  null, null, null,  "name desc");
 		   }
 		  
+		   //pulls all beer name only
 		   public List<String> selectAll(String sort) {
 			   String sortline;
 			   if (sort.equalsIgnoreCase("rating")) {
@@ -88,11 +95,13 @@ public class DatabaseBeer {
 		      return list;
 		   }
 		   
+		   //remove one beer
 		   public void remove(String name) {
 			   String whereClause = "name = \"" + name + "\"";
 			   db.delete(TABLE_NAME, whereClause, null);
 		   }
 		   
+		   //cursor with name and another element
 		   public Cursor selectAll(String sort, String second) {
 			   String sortline;
 			   if (sort.equalsIgnoreCase("rating")) {

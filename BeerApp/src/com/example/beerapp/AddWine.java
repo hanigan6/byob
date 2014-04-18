@@ -23,7 +23,6 @@ public class AddWine extends Activity implements OnClickListener, LocationListen
 	private EditText name;
 	private EditText maker;
 	private EditText maker_location;
-	private EditText location_name;
 	private EditText ABV;
 	private EditText type;
 	private RatingBar ratingBar;
@@ -38,7 +37,6 @@ public class AddWine extends Activity implements OnClickListener, LocationListen
 		setContentView(R.layout.activity_beverage_add);
 		
 
-		Log.i("addb", "0");
 		// Get the location manager
 	    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    // Define the criteria how to select the locatioin provider -> use
@@ -47,24 +45,12 @@ public class AddWine extends Activity implements OnClickListener, LocationListen
 	    provider = locationManager.getBestProvider(criteria, false);
 	    location = locationManager.getLastKnownLocation(provider);
 	    
-		//Log.i("addb", location.toString());
-		
-		/*mLocationClient = new LocationClient(this, this, this);
-		Log.i("addb", "1");
-		mLocationClient.connect();
-		Log.i("addb", "2");
-	   
-	    Log.i("addb", "3");
-		*/
 		name = (EditText) findViewById(R.id.name_text);
 		maker = (EditText) findViewById(R.id.maker_text);
 		maker_location = (EditText) findViewById(R.id.maker_location_text);
-		location_name = (EditText) findViewById(R.id.location_name_text);
 		type = (EditText) findViewById(R.id.type_text);
 		ABV = (EditText) findViewById(R.id.ABV_text);
 		
-		//View ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-		//ratingBar.setOnClickListener(this);
 		ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 		
 		View btnAddWine = (Button) findViewById(R.id.add_beverage_button);	
@@ -96,10 +82,7 @@ public class AddWine extends Activity implements OnClickListener, LocationListen
 
 	  @Override
 	  public void onLocationChanged(Location location) {
-	    //int lat = (int) (location.getLatitude());
-	    //int lng = (int) (location.getLongitude());
-	    //latituteField.setText(String.valueOf(lat));
-	    //longitudeField.setText(String.valueOf(lng));
+		  locationManager.requestLocationUpdates(provider, 400, 1, this);
 	  }
 
 	  @Override
@@ -159,11 +142,9 @@ public class AddWine extends Activity implements OnClickListener, LocationListen
 			else {
 				String makertext = this.maker.getText().toString();
 				String makerloctext = this.maker_location.getText().toString();
-				String locanametext = this.location_name.getText().toString();
 				String typetext = this.type.getText().toString();
 				String ABVtext = this.ABV.getText().toString();
 				String ratingtext = String.valueOf(ratingBar.getRating());
-				//TODO loc name for db
 				if (! locationInitialized) {
 					Log.i(typetext, ABVtext);
 					this.dh.insert(nametext, makertext, makerloctext, typetext, ABVtext, (double)0, (double)0, ratingtext);

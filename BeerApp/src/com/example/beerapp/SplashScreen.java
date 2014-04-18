@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
+//splash screen with our logo
 public class SplashScreen extends Activity {
 	protected boolean active = true;
 	protected int splashTime = 5000;
